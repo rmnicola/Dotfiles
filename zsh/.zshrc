@@ -1,4 +1,4 @@
-# -------- ZSH options 
+# -------- Options 
 #
 # If you actually need any of them in non-interactive shells, 
 # transfer them to .zshenv.
@@ -25,8 +25,13 @@ setopt SHARE_HISTORY		# share history between instances of zsh
 setopt NO_BEEP			# fuck beeps. No, seriously. Fuck them
 setopt CORRECT			# offer to correct mistyped commands
 
-# -------- End of ZSH options 
-
+# -------- End of Options 
+#
 # -------- Modules
-autoload -U compinit; 	compinit
+
+# >> Completion
+source $ZDOTDIR/zcomp.zsh	# zcomp loads compinit with other options
+
+zstyle ':completion:*' completer _extensions _complete _approximate
+
 autoload -U zmv
