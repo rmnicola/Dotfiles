@@ -41,6 +41,9 @@ source $ZDOTDIR/zcomp.zsh	# zcomp loads compinit with other options
 # >> Zmove is awesome
 autoload -U zmv			# zmv lets you easily rename files
 
+# >> History search end
+autoload -U history-search-end 	# go straight to the end of history line
+
 # >> Zsh syntax highlighting by zsh-users (git submodule)
 # *** SEE END OF ZSHRC, IT IS SOURCE THERE ***
 
@@ -76,6 +79,15 @@ export KEYTIMEOUT=1
 # When in normal mode, bind the 'v' key to edit command in vim 
 zle -N edit-command-line
 bindkey -M vicmd v edit-command-line
+
+# >> Better history search
+# Bind keys to search in history for commands that start like the one you're
+# typying at the moment
+zle -N history-beginning-search-backward-end history-search-end
+zle -N history-beginning-search-forward-end history-search-end
+bindkey "^k" history-beginning-search-backward-end
+bindkey "^j" history-beginning-search-forward-end
+
 
 
 # >> Sourcing syntax-highlighting
