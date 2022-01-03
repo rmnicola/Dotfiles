@@ -41,11 +41,23 @@ source $ZDOTDIR/zcomp.zsh	# zcomp loads compinit with other options
 # >> Zmove is awesome
 autoload -U zmv			# zmv lets you easily rename files
 
+# >> Zsh syntax highlighting by zsh-users (git submodule)
+# *** SEE END OF ZSHRC, IT IS SOURCE THERE ***
+
+# >> Zsh completions by zsh-users (git submodule)
+# Add every completion to fpath
+fpath=($ZDOTDIR/modules/zsh-completions/src $fpath)
+
 # >> Edit command line from zshcontrib
 autoload -U edit-command-line
 
 # >> Cursor_mode by Matthieu Cneude
+# https://github.com/Phantas0s/.dotfiles
 autoload -U cursor_mode; cursor_mode	# change cursor beam for insert/normal
+
+# >> Git it on by Peter Wildeford 
+# https://github.com/peterhurford/git-it-on.zsh
+autoload -U gitit 		# interact with remote repo on your browser
 
 
 # -------- End of Modules
@@ -64,3 +76,7 @@ export KEYTIMEOUT=1
 # When in normal mode, bind the 'v' key to edit command in vim 
 zle -N edit-command-line
 bindkey -M vicmd v edit-command-line
+
+
+# >> Sourcing syntax-highlighting
+source $ZDOTDIR/modules/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
