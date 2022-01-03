@@ -19,6 +19,5 @@ export XDG_RUNTIME_DIR="run/user/$UID"
 export EDITOR="nvim"
 export VISUAL="nvim"
 export BROWSER="firefox"
-export TERM="gnome-terminal"
 
 # -------- End of ZSH environment variables
