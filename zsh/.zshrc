@@ -28,10 +28,39 @@ setopt CORRECT			# offer to correct mistyped commands
 # -------- End of Options 
 #
 # -------- Modules
+#
+# Modules used range from default ones to ones made by third parties
+# as well as (some) made by me
+
+# Add modules subfolder to fpath
+fpath=($ZDOTDIR/modules $fpath)
 
 # >> Completion
 source $ZDOTDIR/zcomp.zsh	# zcomp loads compinit with other options
 
-zstyle ':completion:*' completer _extensions _complete _approximate
+# >> Zmove is awesome
+autoload -U zmv			# zmv lets you easily rename files
 
-autoload -U zmv
+# >> Edit command line from zshcontrib
+autoload -U edit-command-line
+
+# >> Cursor_mode by Matthieu Cneude
+autoload -U cursor_mode; cursor_mode	# change cursor beam for insert/normal
+
+
+# -------- End of Modules
+#
+# -------- Aliases
+# TODO
+# -------- End of Aliases
+#
+# -------- Misc
+#
+# >> Vi mode shenanigans
+# Add support for vi mode (unnecessary if vim is your default editor)
+bindkey -v
+# Faster, please...
+export KEYTIMEOUT=1
+# When in normal mode, bind the 'v' key to edit command in vim 
+zle -N edit-command-line
+bindkey -M vicmd v edit-command-line
