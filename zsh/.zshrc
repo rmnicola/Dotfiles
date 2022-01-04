@@ -88,7 +88,5 @@ zle -N history-beginning-search-forward-end history-search-end
 bindkey "^k" history-beginning-search-backward-end
 bindkey "^j" history-beginning-search-forward-end
 
-
-
 # >> Sourcing syntax-highlighting
 source $ZDOTDIR/modules/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
