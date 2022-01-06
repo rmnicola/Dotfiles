@@ -71,7 +71,9 @@ autoload -U fbkp; fbkp
 # -------- End of Modules
 #
 # -------- Aliases
-# TODO
+
+source $ZDOTDIR/zaliases.zsh
+
 # -------- End of Aliases
 #
 # -------- Misc
