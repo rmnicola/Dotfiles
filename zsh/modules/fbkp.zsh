@@ -24,7 +24,7 @@ _fpush () {
 		exit
 	fi
 	echo ">> Dumping: Mozilla folder."
-	cp -rf $HOME/.mozilla $bk_folder/Mozilla
+	rsync -av $HOME/.mozilla/ $bk_folder/Mozilla
 	if [ $? -eq 0 ]; then echo "Dumped: Mozilla folder."
 	else echo "!! Failed to dump Mozilla folder."; fi
 }
@@ -35,7 +35,7 @@ _fpull () {
 		exit
 	fi
 	echo ">> Loading: Mozilla folder."
-	cp -rf $bk_folder/Mozilla $HOME/.mozilla 
+	rsync -av $bk_folder/Mozilla/ $HOME/.mozilla 
 	if [ $? -eq 0 ]; then echo "Loaded: Mozilla folder."
 	else echo "!! Failed to load Mozilla folder."; fi
 }
