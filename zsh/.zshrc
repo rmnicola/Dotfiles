@@ -65,6 +65,8 @@ autoload -U gitit 		# interact with remote repo on your browser
 # >> Gnome Backup Utilities by Me =)
 autoload -U gbkp; gbkp
 
+# >> Firefox Backup Utilities by Me =)
+autoload -U fbkp; fbkp
 
 # -------- End of Modules
 #
