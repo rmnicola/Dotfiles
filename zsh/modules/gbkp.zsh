@@ -1,6 +1,8 @@
-bk_folder=$HOME/'Documents/5 - Backup'
-
-if [[ ! -d $bk_folder ]]; then bk_folder=$HOME; fi
+# Check env variable for gnome backup
+# If it does not exist, send bk home
+if [[ ! $GNOME_BACKUP_DIR ]]; then gbk_folder=$HOME/.gnomebkp
+else gbk_folder=$GNOME_BACKUP_DIR
+fi
 
 systems=("nautilus" \
 	"desktop" \
@@ -11,25 +13,25 @@ systems=("nautilus" \
 
 gbkp () {
 	bkp_command="$1"
-	if [ $# -eq 0 ]; then help;
+	if [ $# -eq 0 ]; then gbkp_help;
 
 	# bkp commands
 	elif [ $bkp_command = push ]; then _dpush $@
 	elif [ $bkp_command = pull ]; then _dpull $@
-	else help 
+	else gbkp_help 
 
 	fi
 }
 
-help () {
+gbkp_help () {
 	printf "Usage:\n\tgbkp <push/pull>\n"
 }
 
 _dpush () {
 	for s in ${systems[@]}; do
 		echo ">> Dumping: $s."
-		touch $bk_folder/"$s-bkp"
-		dconf dump /org/gnome/$s/ > $bk_folder/"$s-bkp"
+		touch $gbk_folder/"$s-bkp"
+		dconf dump /org/gnome/$s/ > $gbk_folder/"$s-bkp"
 		if [ $? -eq 0 ]; then echo ">> Dumped: $s."
 		else echo "!! Failed to dump: $s."; fi
 	done
@@ -38,7 +40,7 @@ _dpush () {
 _dpull () {
 	for s in ${systems[@]}; do
 		echo ">> Loading: $s."
-		dconf load /org/gnome/$s/ < $bk_folder/"$s-bkp"
+		dconf load /org/gnome/$s/ < $gbk_folder/"$s-bkp"
 		if [ $? -eq 0 ]; then echo ">> Loaded: $s."
 		else echo "!! Failed to load: $s."; fi
 	done
