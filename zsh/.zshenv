@@ -23,5 +23,10 @@ export FIREFOX_BACKUP_DIR="$XDG_DOCUMENTS_DIR/.backup/Mozilla"
 export EDITOR="nvim"
 export VISUAL="nvim"
 export BROWSER="firefox"
+export CMAKE_CXX_COMPILER="g++"
+export CMAKE_C_COMPILER="gcc"
+
+# >> Path
+export PATH="$HOME/bin:$HOME/.local/bin:$PATH"
 
 # -------- End of ZSH environment variables
