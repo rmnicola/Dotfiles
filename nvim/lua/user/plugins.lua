@@ -46,8 +46,7 @@ return packer.startup(function(use)
   use "nvim-lua/plenary.nvim" -- Useful lua functions used ny lots of plugins
 
   -- Colorschemes
-  use "lunarvim/darkplus.nvim"
-  use "Shatur/neovim-ayu"
+  use "marko-cerovac/material.nvim" -- Material w/ treesiter support
 
   -- Cmp plugins
   use "hrsh7th/nvim-cmp" -- The completion plugin
@@ -65,6 +64,9 @@ return packer.startup(function(use)
   -- LSP
   use "neovim/nvim-lspconfig"
   use "williamboman/nvim-lsp-installer"
+
+  -- Telescope
+  use "nvim-telescope/telescope.nvim"
 
   -- Automatically set up your configuration after cloning packer.nvim
   -- Put this at the end after all plugins

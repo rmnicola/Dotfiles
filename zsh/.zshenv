@@ -29,4 +29,10 @@ export CMAKE_C_COMPILER="gcc"
 # >> Path
 export PATH="$HOME/bin:$HOME/.local/bin:$PATH"
 
+# >> ESPRESSIF
+export IDF_PATH="$HOME/esp/esp-idf"
+export PATH="$PATH:$HOME/esp/xtensa-esp32-elf/bin"
+
+# >> PlatformIO
+export PATH="$PATH:$HOME/.platformio/penv/bin"
 # -------- End of ZSH environment variables

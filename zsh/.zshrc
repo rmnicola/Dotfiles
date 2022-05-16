@@ -60,7 +60,7 @@ autoload -U cursor_mode; cursor_mode	# change cursor beam for insert/normal
 
 # >> Git it on by Peter Wildeford 
 # https://github.com/peterhurford/git-it-on.zsh
-autoload -U gitit 		# interact with remote repo on your browser
+autoload -U gitit; gitit
 
 # >> Gnome Backup Utilities by Me =)
 autoload -U gbkp; gbkp
