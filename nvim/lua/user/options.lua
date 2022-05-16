@@ -7,7 +7,7 @@ local options = {
   hlsearch = true,                         -- highlight matches on search
   ignorecase = true,                       -- ignore case in search patterns
   mouse = "a",                             -- allow mouse movements in neovim
-  showmode = false,                        -- suppress showing mode name 
+  showmode = false,                        -- suppress showing mode name
   smartcase = true,                        -- chooses when to unset ignorecase
   swapfile = false,                        -- do not create a swap file
   termguicolors = true,                    -- set term gui colors
@@ -18,7 +18,7 @@ local options = {
   -- End of general options
   --
   -- Indent options
-  autoindent = true,	               		   -- automatically indent line 
+  autoindent = true,	               		   -- automatically indent line
   expandtab = true,                        -- convert tabs to spaces
   shiftwidth = 2,                          -- number of spaces per indentation
   smartindent = true,                      -- make indenting smarter again
@@ -26,7 +26,7 @@ local options = {
   -- End of indent options
   --
   -- Completion options
-  completeopt = { "menuone",               -- use popup menu for completions 
+  completeopt = { "menuone",               -- use popup menu for completions
                   "noselect" },            -- no selection until user selects
   -- End of completion options
   --
@@ -50,6 +50,10 @@ local options = {
   pumheight = 10,                          -- pop up menu height
   -- End of line options
   --
+  --
+  --Status-line options
+  laststatus = 3                           -- use global status-line
+  -- End of Status-line options
 }
 
 
