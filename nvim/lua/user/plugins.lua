@@ -44,6 +44,7 @@ return packer.startup(function(use)
   use "wbthomason/packer.nvim" -- Have packer manage itself
   use "nvim-lua/popup.nvim" -- An implementation of the Popup API from vim
   use "nvim-lua/plenary.nvim" -- Useful lua functions used ny lots of plugins
+  use "numToStr/Comment.nvim" -- Easy comments
 
   -- Colorschemes
   use "marko-cerovac/material.nvim" -- Material w/ treesiter support
@@ -73,6 +74,9 @@ return packer.startup(function(use)
     "nvim-treesitter/nvim-treesitter",
     run = ":TSUpdate",
   }
+
+  -- Context-commentstring
+  use "JoosepAlviste/nvim-ts-context-commentstring"
 
   -- Automatically set up your configuration after cloning packer.nvim
   -- Put this at the end after all plugins
