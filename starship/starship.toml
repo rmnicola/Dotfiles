@@ -1,6 +1,6 @@
 # Use custom format
 format = """
-$directory \
+$directory\
 $character\
 """
 
@@ -43,11 +43,12 @@ style="peach"
 
 [git_status]
 style="text"
-conflicted = '[](red)'
-ahead = '[](green)'
-behind = '[](red)'
-diverged = '[](text)'
-up_to_date = '[󰸞](green)'
+format='([\[ $all_status$ahead_behind\]]($style) )'
+conflicted = '[](red) '
+ahead = '[](green) '
+behind = '[](red) '
+diverged = '[](text) '
+up_to_date = '[󰸞](green) '
 untracked = '[$count](bold text)[U](bold text) '
 stashed = '[$count](bold text)[S](bold text) '
 modified = '[$count](bold text)[M](bold text) '
@@ -67,7 +68,7 @@ repo_root_format="""
 [$before_root_path]($before_repo_root_style)\
 [](text) [$repo_root]($repo_root_style)\
 [$path]($style)\
-[$read_only]($read_only_style)\
+[$read_only]($read_only_style) \
 """
 
 # Define catpuccin mocha pallete
