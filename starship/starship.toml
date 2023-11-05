@@ -10,6 +10,7 @@ $git_commit \
 $git_branch \
 $git_state \
 $git_status \
+${custom.ros}\
 """
 
 # Wait 10 milliseconds for starship to check files under the current directory.
@@ -20,6 +21,10 @@ add_newline = false
 
 # Set catppuccin pallete as the default
 palette = "catppuccin"
+
+[custom.ros]
+when="command -v ros2"
+format="[󰚩 ](lavender)"
 
 [cmd_duration]
 style="flamingo"
