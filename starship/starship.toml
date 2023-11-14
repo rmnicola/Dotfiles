@@ -11,6 +11,7 @@ $cmd_duration\
 ( $git_state)\
 ( $git_status)\
 ( ${custom.ros})\
+( ${conda})\
 """
 
 # Wait 10 milliseconds for starship to check files under the current directory.
@@ -21,6 +22,11 @@ add_newline = false
 
 # Set catppuccin pallete as the default
 palette = "catppuccin"
+
+[conda]
+symbol = '󱔎 '
+ignore_base = false
+format = '[$symbol$environment](lavender)'
 
 [custom.ros]
 when="command -v ros2"
