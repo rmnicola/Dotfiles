@@ -11,6 +11,7 @@ $cmd_duration\
 ( $git_state)\
 ( $git_status)\
 ( ${custom.ros})\
+( ${python})\
 ( ${conda})\
 """
 
@@ -22,6 +23,15 @@ add_newline = false
 
 # Set catppuccin pallete as the default
 palette = "catppuccin"
+
+[python]
+pyenv_version_name = true
+detect_extensions = []
+detect_files = []
+python_binary = ['./venv/bin/python', 'python', 'python3', 'python2']
+symbol = ' '
+format = '[$symbol$virtualenv]($style)'
+style = "lavender"
 
 [conda]
 symbol = '󱔎 '
