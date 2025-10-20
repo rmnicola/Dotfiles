@@ -8,6 +8,7 @@ alias lt='eza --tree --level=2 --long --icons --git'
 alias lta='lt -a'
 alias ff="fzf --preview 'bat --style=numbers --color=always {}'"
 alias cd="zd"
+alias cat="bat"
 zd() {
   if [ $# -eq 0 ]; then
     builtin cd ~ && return
@@ -32,4 +33,5 @@ alias conda-init='eval "$($HOME/miniconda3/bin/conda shell.zsh hook)"'
 # Git
 alias gl="git log --oneline --graph"
 alias gs="git status"
+alias ga="git add"
 alias gc="git commit"
