@@ -8,7 +8,7 @@ bindd = SUPER, return, Toggle main Scratchpad, exec, $scripts_dir/scratchpad.sh
 bindd = SUPER CTRL, return, Toggle alt Scratchpad, exec, $scripts_dir/scratchpad.sh --alt
 
 # --- ZK Scratchpad Binding ---
-bindd = SUPER SHIFT, Z, Toggle ZK Scratchpad, exec, ~/.config/hypr/scripts/zk-scratchpad.sh
+bindd = SUPER, Z, Toggle ZK Scratchpad, exec, ~/.config/hypr/scripts/zk-scratchpad.sh
 
 # Go to workspace 3 and open terminal
 bind = SUPER SHIFT, return, workspace, 3
@@ -23,7 +23,7 @@ bind = SUPER SHIFT, B, workspace, 2
 bindd = SUPER SHIFT, B, Browser (Firefox), exec, firefox
 
 # Switch kb layout
-bindd = SUPER SHIFT CTRL, M, Next keyboard layout, exec, hyprctl switchxkblayout all next
+bindd = SUPER CTRL, M, Next keyboard layout, exec, hyprctl switchxkblayout all next
 
 # Navigation
 bindd = SUPER, h, Previous workspace, workspace, e-1
@@ -35,10 +35,10 @@ bindd = SUPER CTRL, h, Move focus left, movefocus, l
 bindd = SUPER CTRL, j, Move focus down, movefocus, d
 bindd = SUPER CTRL, k, Move focus up, movefocus, u
 bindd = SUPER CTRL, l, Move focus right, movefocus, r
-bindd = SUPER ALT, h, Move window left, movewindow, l
-bindd = SUPER ALT, j, Move window down, movewindow, d
-bindd = SUPER ALT, k, Move window up, movewindow, u
-bindd = SUPER ALT, l, Move window right, movewindow, r
+bindd = SUPER SHIFT, h, Move window left, movewindow, l
+bindd = SUPER SHIFT, j, Move window down, movewindow, d
+bindd = SUPER SHIFT, k, Move window up, movewindow, u
+bindd = SUPER SHIFT, l, Move window right, movewindow, r
 
 # Applications
 bindd = SUPER, E, File manager, exec, uwsm app -- nautilus --new-window
@@ -53,15 +53,15 @@ bindd = SUPER ALT, S, Slack, exec, omarchy-launch-or-focus slack
 # If your web app url contains #, type it as ## to prevent hyperland treat it as comments
 bindd = SUPER, A, Gemini, exec, omarchy-launch-webapp "https://gemini.google.com/app?hl=en-US"
 bindd = SUPER CTRL, A, Open Web UI, exec, omarchy-launch-webapp "http://[2804:14c:38:8982:ef4d:d590:fe21:e290]:3000/"
-bindd = SUPER ALT, A, Adalove, exec, omarchy-launch-webapp "https://adalove.inteli.edu.br/academic-life"
+bindd = SUPER SHIFT, A, Adalove, exec, omarchy-launch-webapp "https://adalove.inteli.edu.br/academic-life"
 bindd = SUPER, C, Calendar, exec, omarchy-launch-webapp "https://workspace.google.com/intl/en-US/products/calendar/"
-bindd = SUPER ALT, W, WhatsApp, exec, omarchy-launch-or-focus-webapp WhatsApp "https://web.whatsapp.com/"
+bindd = SUPER SHIFT, W, WhatsApp, exec, omarchy-launch-or-focus-webapp WhatsApp "https://web.whatsapp.com/"
 
 # Screenshots
 unbind = CTRL, PRINT
 unbind = , PRINT
-bindd = SUPER SHIFT, S, Take a screenshot of display, exec, omarchy-cmd-screenshot output
-bindd = SUPER SHIFT ALT, S, Take a screenshot of region, exec, omarchy-cmd-screenshot
+bindd = SUPER, S, Take a screenshot of display, exec, omarchy-cmd-screenshot output
+bindd = SUPER SHIFT, S, Take a screenshot of region, exec, omarchy-cmd-screenshot
 
 # Screen recordings
 unbind = ALT, PRINT
@@ -69,6 +69,10 @@ unbind = ALT SHIFT, PRINT
 unbind = CTRL ALT, PRINT
 unbind = CTRL ALT SHIFT, PRINT
 bindd = SUPER, R, Screen record display (no audio), exec, omarchy-cmd-screenrecord output
-bindd = SUPER SHIFT, R, Screen record display (with audio), exec, omarchy-cmd-screenrecord output audio
-bindd = SUPER ALT, R, Screen record region (no audio), exec, omarchy-cmd-screenrecord region
+bindd = SUPER ALT, R, Screen record display (with audio), exec, omarchy-cmd-screenrecord output audio
+bindd = SUPER SHIFT, R, Screen record region (no audio), exec, omarchy-cmd-screenrecord region
 bindd = SUPER SHIFT ALT, R, Screen record region (with audio), exec, omarchy-cmd-screenrecord region audio
+
+# Overwrite existing bindings, like putting Omarchy Menu on Super + Space
+# unbind = SUPER, SPACE
+# bindd = SUPER, SPACE, Omarchy menu, exec, omarchy-menu
