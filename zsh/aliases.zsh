@@ -34,4 +34,5 @@ alias conda-init='eval "$($HOME/miniconda3/bin/conda shell.zsh hook)"'
 alias gl="git log --oneline --graph"
 alias gs="git status"
 alias ga="git add"
+alias gp="git push"
 alias gc="git commit"
