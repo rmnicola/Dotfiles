@@ -20,6 +20,7 @@ export EDITOR="nvim"
 export VISUAL="nvim"
 export BROWSER="chromium"
 export SUDO_EDITOR="$EDITOR"
+export TERMINAL="ghostty"
 export CMAKE_CXX_COMPILER="g++"
 export CMAKE_C_COMPILER="gcc"
 
