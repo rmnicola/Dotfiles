@@ -1,9 +1,7 @@
 ---
 title: '{{ title }}'
-date: '{{ format-date now "%Y-%M-%d" }}'
+date: '{{ format-date now "%Y-%m-%d" }}'
 keywords: []
 ---
-
-# {{ title }}
 
 # Referências
