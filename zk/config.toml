@@ -18,9 +18,9 @@ filename = '{{format-date now "%Y%m%d"}}'
 
 [alias]
 edlast = "zk edit --limit 1 --sort modified- $@"
-conf = '$EDITOR "$XDG_CONFIG_HOME/zk/config.toml"'
+config = '$EDITOR "$XDG_CONFIG_HOME/zk/config.toml"'
 wc = "zk list --format '{{word-count}}\t{{title}}' --sort word-count $@"
 bl = "zk list --link-to $@"
-daily = 'zk new --no-input "$ZK_NOTEBOOK_DIR/journal"'
+d = 'zk new --no-input "$ZK_NOTEBOOK_DIR/journal"'
 z = "zk edit --exclude journal --interactive"
 zd = "zk edit journal --interactive"

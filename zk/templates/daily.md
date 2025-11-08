@@ -8,9 +8,13 @@ keywords: [daily]
 # Anotações
 
 # Tarefas planejadas
-[] (S/M/L) - Tarefa
 
 # Tarefas não planejadas
-[] (S/M/L) - Tarefa
+
+# Rotina
+[] (S) - Alongamento
+[] (S) - Exercício
+[] (S) - Leitura
 
 Dia anterior: 
+[[{{format-date now "%Y%m%d"}}]]
