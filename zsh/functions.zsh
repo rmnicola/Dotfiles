@@ -17,6 +17,15 @@ iso2sd() {
   fi
 }
 
+# Custom function to activate a micromamba environment for ROS
+# This activates the environment and then unsets LD_LIBRARY_PATH
+# to prevent library conflicts with ROS.
+ros_env() {
+  micromamba activate ros_env
+  unset LD_LIBRARY_PATH
+  echo "Activated micromamba env ros_env and unset LD_LIBRARY_PATH for ROS compatibility."
+}
+
 # Format an entire drive for a single partition using ext4
 format-drive() {
   if [ $# -ne 2 ]; then
