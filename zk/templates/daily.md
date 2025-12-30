@@ -1,11 +1,11 @@
 ---
-date: {{ format-date now "%Y-%m-%d" }}
-mood: 1-10
-weekday: {{format-date now "%A"}}
+date: {{ format-date now "%Y-%m-%d %A" }}
+mood: 0
+previous: [[{{sh "date -d yesterday +%Y%m%d | tr -d '\n'"}}]]
+week: [[{{format-date now "%YW%U"}}]]
+month: [[{{format-date now "%YM%m"}}]]
 keywords: [daily]
 ---
-
-# Anotações
 
 # Tarefas planejadas
 
@@ -15,6 +15,4 @@ keywords: [daily]
 [] (S) - Alongamento
 [] (S) - Exercício
 [] (S) - Leitura
-
-Dia anterior: 
-[[{{format-date now "%Y%m%d"}}]]
+[] (S) - Limpeza

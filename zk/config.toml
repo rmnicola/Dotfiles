@@ -30,11 +30,27 @@ paths = ["journal"]
 template = 'daily.md'
 filename = '{{format-date now "%Y%m%d"}}'
 
+[group.weekly]
+paths = ["journal"]
+
+[group.weekly.note]
+template = 'weekly.md'
+filename = '{{format-date now "%YW%U"}}'
+
+[group.monthly]
+paths = ["journal"]
+
+[group.monthly.note]
+template = 'monthly.md'
+filename = '{{format-date now "%YM%m"}}'
+
 [alias]
 config = '$EDITOR "$XDG_CONFIG_HOME/zk/config.toml"'
 wc = "zk list --format '{{word-count}}\t{{title}}' --sort word-count $@"
 bl = "zk list --link-to $@"
-d = 'zk new --no-input "$ZK_NOTEBOOK_DIR/journal"'
+d = 'zk new --no-input "$ZK_NOTEBOOK_DIR/journal" -g daily'
+w = 'zk new --no-input "$ZK_NOTEBOOK_DIR/journal" -g weekly'
+m = 'zk new --no-input "$ZK_NOTEBOOK_DIR/journal" -g monthly'
 z = "zk edit --exclude journal --exclude lectures --interactive"
 a = "zk edit lectures/assignments --interactive"
 l = "zk edit lectures --interactive"
