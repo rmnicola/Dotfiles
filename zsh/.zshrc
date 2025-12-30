@@ -1,6 +1,10 @@
+# zmodload zsh/zprof
+
 source "$ZDOTDIR/shell.zsh"
 source "$ZDOTDIR/modules.zsh"
 source "$ZDOTDIR/aliases.zsh"
 source "$ZDOTDIR/functions.zsh"
 source "$ZDOTDIR/prompt.zsh"
 source "$ZDOTDIR/init.zsh"
+
+# zprof

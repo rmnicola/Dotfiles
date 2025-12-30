@@ -1,98 +1,62 @@
-# Use custom format
 format = """
 $directory\
 $character\
 """
 
 right_format = """
-$cmd_duration\
-( $git_commit)\
-( $git_branch)\
-( $git_state)\
 ( $git_status)\
+( $git_branch)\
 ( ${custom.ros})\
-( ${python})\
 ( ${conda})\
 """
 
-# Wait 10 milliseconds for starship to check files under the current directory.
-scan_timeout = 10
-
-# Disable the blank line at the start of the prompt
+# Increased to prevent flickering on large repos
+scan_timeout = 500
 add_newline = false
-
-# Set catppuccin pallete as the default
 palette = "catppuccin"
-
-[python]
-pyenv_version_name = true
-detect_extensions = []
-detect_files = []
-python_binary = ['./venv/bin/python', 'python', 'python3', 'python2']
-symbol = ' '
-format = '[$symbol$virtualenv]($style)'
-style = "lavender"
 
 [conda]
 symbol = '󱔎 '
 ignore_base = false
-format = '[$symbol$environment](lavender)'
+format = '[$symbol](lavender)'
 
 [custom.ros]
-when="command -v ros2"
-format="[󰚩 ](lavender)"
+# Faster check using Environment Variable
+when = """ test -n "$ROS_DISTRO" """
+format = "[󰚩 ](lavender)"
 
-[cmd_duration]
-style="flamingo"
-format="took [$duration]($style)\n"
-
-# Character module config
 [character]
-success_symbol="[❯](green)"
-error_symbol="[❯](red)"
-vimcmd_symbol="[](green)"
+success_symbol = "[❯](green)"
+error_symbol = "[❯](red)"
+vimcmd_symbol = "[](green)"
 
 [git_branch]
-style="mauve"
-format="[$symbol$branch(:$remote_branch)]($style)"
-
-[git_state]
-style="yellow"
-
-[git_commit]
-style="peach"
+style = "mauve"
+format = "[$symbol$branch(:$remote_branch)]($style)"
 
 [git_status]
-style="text"
-format='([\[ $all_status$ahead_behind\]]($style) )'
+style = "text"
+format = '([$ahead_behind]($style) )'
 conflicted = '[](red) '
 ahead = '[](green) '
 behind = '[](red) '
 diverged = '[](text) '
 up_to_date = '[󰸞](green) '
-untracked = '[$count](bold text)[U](bold text) '
-stashed = '[$count](bold text)[S](bold text) '
-modified = '[$count](bold text)[M](bold text) '
-staged = '[+$count](bold text) '
-renamed = '[$count](bold text)[R](bold text) '
-deleted = '[$count](bold text)[D](bold text) '
 
-# Directory module config
 [directory]
-truncate_to_repo=false
-truncation_symbol='…/'
-style="overlay2"
-read_only=" "
-read_only_style="red"
-repo_root_style="overlay2"
-repo_root_format="""
-[$before_root_path]($before_repo_root_style)\
-[](text) [$repo_root]($repo_root_style)\
-[$path]($style)\
-[$read_only]($read_only_style) \
-"""
+# The Fix: Handle repos natively
+truncate_to_repo = true
+truncation_length = 3
+truncation_symbol = "…/"
+# The Fix: Use letter-based breadcrumbs for a cleaner minimal look
+fish_style_pwd_dir_length = 1
+style = "overlay2"
+read_only = " "
+read_only_style = "red"
+repo_root_style = "subtext1"
+# Simplified format
+repo_root_format = "[$before_root_path]($style)[$repo_root]($repo_root_style)[$path]($style)[$read_only]($read_only_style) "
 
-# Define catpuccin mocha pallete
 [palettes.catppuccin]
 rosewater = "#f5e0dc"
 flamingo = "#f2cdcd"

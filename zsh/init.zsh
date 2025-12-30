@@ -15,10 +15,6 @@ if [[ -f "$HOME/.cargo/env" ]]; then
   source "$HOME/.cargo/env"
 fi
 
-if [[ -f "/usr/share/nvm/init-nvm.sh" ]]; then
-  source /usr/share/nvm/init-nvm.sh
-fi
-
 if command -v fnm &> /dev/null; then
   export PATH="/home/rmnicola/.local/share/fnm:$PATH"
   eval "`fnm env`"

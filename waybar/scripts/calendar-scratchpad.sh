@@ -2,13 +2,13 @@
 
 # Set defaults for the 3-month view
 CLASS_NAME="cal"
-WORKSPACE_NAME="calendar"
+WORKSPACE_NAME="calendar_d"
 CAL_COMMAND="cal -3" # Default command
 
 # Check for -y or -Y argument
 if [[ "$1" == "-y" || "$1" == "-Y" ]]; then
     CLASS_NAME="yearcal"
-    WORKSPACE_NAME="calendar"  # Use a new, unique workspace name
+    WORKSPACE_NAME="calendar_y"  # Use a new, unique workspace name
     CAL_COMMAND="cal $1"      # Overwrite the command with the provided argument
 fi
 
