@@ -1,0 +1,1 @@
+/home/rnicola/.config/omarchy/current/theme/neovim.lua
