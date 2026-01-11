@@ -10,8 +10,15 @@ bind-key G end
 bind-key d pagedown
 bind-key u pageup
 
+text-width 0
+datetime-format "%m/%d"
+articlelist-format "%f %D  %t"
+ignore-article "*" "age > 3"
+
+run-on-startup select-tag
+
 # --- Browser Plug (using w3m for inline reading) ---
-browser "w3m %u"
+browser "rdrview -B w3m %u"
 macro , open-in-browser ;
 bind-key o open-in-browser
 
