@@ -26,6 +26,8 @@ ros_env() {
   export TURTLEBOT3_MODEL=waffle
   export GAZEBO_MODEL_PATH=$GAZEBO_MODEL_PATH:$(ros2 pkg prefix turtlebot3_gazebo)/share/turtlebot3_gazebo/models
   echo "Activated micromamba env ros_env and unset LD_LIBRARY_PATH for ROS compatibility."
+  eval "$(register-python-argcomplete ros2)"
+  eval "$(register-python-argcomplete colcon)"
 }
 
 # Format an entire drive for a single partition using ext4

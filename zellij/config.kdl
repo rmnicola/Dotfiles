@@ -21,7 +21,7 @@ keybinds {
       unbind "Ctrl p" // Was Pane Mode
       unbind "Ctrl n" // Was Resize Mode
       unbind "Ctrl h" // Was Resize Mode
-      unbind "Ctrl s" // Was Resize Mode
+      unbind "Ctrl s" // Was Scroll mode
       unbind "Alt a" // Was Resize Mode
       
       // Ctrl-y is usually not bound by default, but we unbind it 
