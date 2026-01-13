@@ -28,7 +28,7 @@
       "7": "七",
       "8": "八",
       "9": "九",
-      "0": "🎵",
+       "0": "🎵",
       "active": "⚪"
     },
     "persistent-workspaces": {
@@ -36,11 +36,11 @@
       "2": [],
       "3": [],
       "4": [],
-      "5": [],
-      "6": [],
-      "7": [],
-      "8": [],
-      "9": []
+      // "5": [],
+      // "6": [],
+      // "7": [],
+      // "8": [],
+      // "9": []
     }
   },
   "custom/omarchy": {
@@ -66,9 +66,7 @@
   "clock": {
     "format": "{:L%A %H:%M}",
     "tooltip": false,
-    "on-click-middle": "~/.config/waybar/scripts/calendar-scratchpad.sh -y",
-    "on-click-right": "~/.config/waybar/scripts/calendar-scratchpad.sh -Y",
-    "on-click": "~/.config/waybar/scripts/calendar-scratchpad.sh"
+    "format-alt": "{:%A, %B %d, %Y (%R)}",
   },
   "network": {
     "format-icons": ["󰤯", "󰤟", "󰤢", "󰤥", "󰤨"],
