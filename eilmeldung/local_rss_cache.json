@@ -1,14 +1,14 @@
 {
   "etags": {
-    "https://feeds.folha.uol.com.br/mundo/rss091.xml": "W/\"f7a5b2-1dc1b-6484456c522c0\"",
-    "https://feeds.folha.uol.com.br/poder/rss091.xml": "W/\"f77427-1f49c-648449ca06fc0\"",
-    "https://feeds.folha.uol.com.br/mercado/rss091.xml": "W/\"f75929-1da0a-64844950e9200\"",
-    "https://www.estadao.com.br/arc/outboundfeeds/feeds/rss/sections/internacional/": "W/\"1c4da-LnJYenhx+aDz8e1gHZtp6xIfurA\"",
-    "https://github.com/basecamp/omarchy/releases.atom": "W/\"f82853dcbd74c69b2b86397de296d6d0\"",
-    "https://github.com/LazyVim/LazyVim/releases.atom": "W/\"05ca9338a71a065daef105c075329836\"",
+    "https://www.estadao.com.br/arc/outboundfeeds/feeds/rss/sections/economia/": "W/\"1ccf6-TdyjpTA+hLquj2AtasYqye1bDqA\"",
+    "https://feeds.folha.uol.com.br/mundo/rss091.xml": "W/\"f7a572-1d83d-64846e5686a80\"",
+    "https://www.estadao.com.br/arc/outboundfeeds/feeds/rss/sections/politica/": "W/\"1e9fb-YTtsT1I7zxTh+oWgMFY4BczfZYI\"",
     "https://github.com/hyprwm/Hyprland/releases.atom": "W/\"32150b84792fdf6fc1a9b9b14566c3c1\"",
-    "https://www.estadao.com.br/arc/outboundfeeds/feeds/rss/sections/politica/": "W/\"1c883-qeYLW5TX/Z0NUqSDr+BXWoB/z5A\"",
-    "https://www.estadao.com.br/arc/outboundfeeds/feeds/rss/sections/economia/": "W/\"1a944-aWhlyF35SXB+RUX0GeA0LwN6khg\""
+    "https://www.estadao.com.br/arc/outboundfeeds/feeds/rss/sections/internacional/": "W/\"280d1-T5rB5J71NwtVonz6anVQx7ML7eE\"",
+    "https://github.com/basecamp/omarchy/releases.atom": "W/\"b95eeb4b4c7c282dc0324c7fb5c99db9\"",
+    "https://feeds.folha.uol.com.br/poder/rss091.xml": "W/\"e6cff6-1f5a2-64846e3fa3480\"",
+    "https://github.com/LazyVim/LazyVim/releases.atom": "W/\"05ca9338a71a065daef105c075329836\"",
+    "https://feeds.folha.uol.com.br/mercado/rss091.xml": "W/\"e7d402-1d650-64846e85418c0\""
   },
   "cache_control": {}
 }

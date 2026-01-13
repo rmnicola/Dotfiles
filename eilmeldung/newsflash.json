@@ -2,6 +2,6 @@
   "backend": "local_rss",
   "concurrent_downlaods": 24,
   "sync_amount": 300,
-  "last_sync": "2026-01-13T13:05:57.481534225+00:00",
+  "last_sync": "2026-01-13T15:49:08.085148244+00:00",
   "keep_articles_days": 30
 }
