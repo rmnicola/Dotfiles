@@ -1,0 +1,14 @@
+{
+  "etags": {
+    "https://feeds.folha.uol.com.br/mundo/rss091.xml": "W/\"f7a5b2-1dc1b-6484456c522c0\"",
+    "https://feeds.folha.uol.com.br/poder/rss091.xml": "W/\"f77427-1f49c-648449ca06fc0\"",
+    "https://feeds.folha.uol.com.br/mercado/rss091.xml": "W/\"f75929-1da0a-64844950e9200\"",
+    "https://www.estadao.com.br/arc/outboundfeeds/feeds/rss/sections/internacional/": "W/\"1c4da-LnJYenhx+aDz8e1gHZtp6xIfurA\"",
+    "https://github.com/basecamp/omarchy/releases.atom": "W/\"f82853dcbd74c69b2b86397de296d6d0\"",
+    "https://github.com/LazyVim/LazyVim/releases.atom": "W/\"05ca9338a71a065daef105c075329836\"",
+    "https://github.com/hyprwm/Hyprland/releases.atom": "W/\"32150b84792fdf6fc1a9b9b14566c3c1\"",
+    "https://www.estadao.com.br/arc/outboundfeeds/feeds/rss/sections/politica/": "W/\"1c883-qeYLW5TX/Z0NUqSDr+BXWoB/z5A\"",
+    "https://www.estadao.com.br/arc/outboundfeeds/feeds/rss/sections/economia/": "W/\"1a944-aWhlyF35SXB+RUX0GeA0LwN6khg\""
+  },
+  "cache_control": {}
+}

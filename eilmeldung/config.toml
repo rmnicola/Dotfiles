@@ -1,0 +1,7 @@
+keep_article_days = 3
+
+feed_list = [
+  "* categories",
+  'query: "Today Unread" today unread',
+  'query: "Today Marked" today marked',
+]
