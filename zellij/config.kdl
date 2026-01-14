@@ -21,14 +21,12 @@ keybinds {
       unbind "Ctrl p" // Was Pane Mode
       unbind "Ctrl n" // Was Resize Mode
       unbind "Ctrl h" // Was Resize Mode
-      unbind "Ctrl s" // Was Scroll mode
+      unbind "Ctrl s" // Was Scroll Mode
+      unbind "Ctrl o" // Was Session Mode
       unbind "Alt a" // Was Resize Mode
-      
-      // Ctrl-y is usually not bound by default, but we unbind it 
-      // just to be 100% safe against any obscure defaults.
-      unbind "Ctrl y" 
 
       // 2. Rebind the missing Zellij actions to new keys (using Alt)
+      bind "Alt o" { SwitchToMode "Session"; }
       bind "Alt p" { SwitchToMode "Pane"; }
       bind "Alt n" { SwitchToMode "Resize"; }
     }
