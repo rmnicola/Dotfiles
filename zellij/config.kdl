@@ -50,7 +50,7 @@ web_client {
     font "monospace"
 }
  
-theme "catppuccin-macchiato"
+theme "tokyo-night"
 default_layout "default"
 pane_frames false
 attach_to_session true
