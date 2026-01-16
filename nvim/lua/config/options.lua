@@ -5,3 +5,4 @@ vim.opt.relativenumber = true
 vim.opt.autoread = true
 vim.g.minipairs_disable = true
 vim.opt.laststatus = 0
+vim.opt.swapfile = false
