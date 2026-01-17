@@ -32,6 +32,9 @@ export ROS_DOMAIN_ID=122
 export TURTLEBOT3_MODEL=burger
 export RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
 
+# >> Zk notebook
+export ZK_NOTEBOOK_DIR="$HOME/Documents/Zettelkasten"
+
 # >> Go env variables
 export GOROOT=/usr/local/go
 export GOPATH=$HOME/go
