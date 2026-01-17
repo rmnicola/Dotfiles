@@ -24,14 +24,15 @@ keybinds {
       unbind "Ctrl s" // Was Scroll Mode
       unbind "Ctrl o" // Was Session Mode
       unbind "Alt a" // Was Resize Mode
+      unbind "Alt o" // Was Resize Mode
 
       // 2. Rebind the missing Zellij actions to new keys (using Alt)
-      bind "Alt o" { SwitchToMode "Session"; }
+      bind "Alt Shift s" { SwitchToMode "Session"; }
       bind "Alt p" { SwitchToMode "Pane"; }
       bind "Alt n" { SwitchToMode "Resize"; }
     }
   shared_except "locked" {
-    bind "Alt t" { NewTab; }
+    bind "Alt t" { NewTab { cwd "."; } }
     bind "Alt f" { ToggleFocusFullscreen; }
     bind "Alt w" { CloseTab; }
     bind "Alt Shift w" { CloseFocus; }
@@ -52,6 +53,7 @@ web_client {
  
 theme "nord"
 default_layout "default"
+default_shell "zsh"
 pane_frames false
 attach_to_session true
 show_startup_tips false
