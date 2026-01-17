@@ -8,20 +8,16 @@ filename = "{{format-date now 'timestamp'}}-{{slug title}}"
 
 [tool]
 editor = "nvim"
-
-[group.lectures]
-paths = ["lectures"]
-
-[group.lectures.note]
-template = "lecture.md"
-filename = "{{format-date now 'timestamp'}}-{{slug title}}"
-
-[group.assignments]
-paths = ["lectures/assignments"]
-
-[group.assignments.note]
-template = "assignment.md"
-filename = "{{format-date now 'timestamp'}}-{{slug title}}"
+fzf-line = "{{style 'title' title-or-path}}{{#each tags}} #{{style 'understate' this}}{{/each}}"
+fzf-preview = "bat -p --color always {-1}"
+fzf-options = """--height 100% --tiebreak begin --exact
+                 --tabstop 4 --reverse --color hl:-1,hl+:-1
+                 -m --with-nth=1 --preview-window right,70%
+                 --no-hscroll
+                 --bind=ctrl-y:accept --bind=ctrl-l:toggle+down
+                 --bind=ctrl-h:clear-multi
+                 --bind='ctrl-p:execute(presenterm {-1})'
+              """
 
 [group.daily]
 paths = ["journal"]
@@ -45,15 +41,12 @@ template = 'monthly.md'
 filename = '{{format-date now "%YM%m"}}'
 
 [alias]
-config = '$EDITOR "$XDG_CONFIG_HOME/zk/config.toml"'
-wc = "zk list --format '{{word-count}}\t{{title}}' --sort word-count $@"
-bl = "zk list --link-to $@"
+# Interactive pickers
+z = "zk edit --exclude journal --interactive"
+zd = "zk edit journal --interactive --tag daily"
+zw = "zk edit journal --interactive --tag weekly"
+zm = "zk edit journal --interactive --tag monthly"
+# Journals
 d = 'zk new --no-input "$ZK_NOTEBOOK_DIR/journal" -g daily'
 w = 'zk new --no-input "$ZK_NOTEBOOK_DIR/journal" -g weekly'
 m = 'zk new --no-input "$ZK_NOTEBOOK_DIR/journal" -g monthly'
-z = "zk edit --exclude journal --exclude lectures --interactive"
-a = "zk edit lectures/assignments --interactive"
-l = "zk edit lectures --interactive"
-zd = "zk edit journal --interactive"
-commit = 'cd $ZK_NOTEBOOK_DIR && git add . && git commit -m "Update zk"'
-push = 'cd $ZK_NOTEBOOK_DIR && git push origin main'
