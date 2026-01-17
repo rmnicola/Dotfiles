@@ -1,7 +1,18 @@
 keep_article_days = 3
-
+autoscrape = true
+feed_list_focused_width = "33%"
+article_list_focused_width = "85%"
+article_list_focused_height = "66%"
+article_content_focused_height = "80%"
 feed_list = [
   "* categories",
   'query: "Today Unread" today unread',
   'query: "Today Marked" today marked',
 ]
+share_targets = [
+  'news-reader ghostty --window-padding-x=18 --class="com.news.reader" -e rn-news-reader "{url}"',
+  'news-reader-forced ghostty --window-padding-x=18 --class="com.news.reader" -e rn-news-reader --forced "{url}"',
+]
+[input_config.mappings]
+"o" = ["share news-reader"]
+"O" = ["share news-reader-forced"]

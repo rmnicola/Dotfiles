@@ -50,7 +50,7 @@ web_client {
     font "monospace"
 }
  
-theme "everforest-dark"
+theme "nord"
 default_layout "default"
 pane_frames false
 attach_to_session true
