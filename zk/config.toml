@@ -50,3 +50,5 @@ zm = "zk edit journal --interactive --tag monthly"
 d = 'zk new --no-input "$ZK_NOTEBOOK_DIR/journal" -g daily'
 w = 'zk new --no-input "$ZK_NOTEBOOK_DIR/journal" -g weekly'
 m = 'zk new --no-input "$ZK_NOTEBOOK_DIR/journal" -g monthly'
+# Save
+save = 'git add . && git commit -m "$(date)" && git push origin main'

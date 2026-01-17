@@ -1,11 +1,17 @@
 ---
-week: {{ format-date now "W%U %B %Y" }}
 mood: 0
-previous: [[{{sh "date -d 'last week' +%YW%U | tr -d '\n'"}}]]
-month: [[{{format-date now "%YM%m"}}]]
 keywords: [weekly]
+title: {{ format-date now "W%U %B %Y" }}
+prev: [[{{sh "date -d 'last week' +%YW%U | tr -d '\n'"}}]]
+month: [[{{format-date now "%YM%m"}}]]
 ---
 
-# Tarefas
+Tarefas
+---
 
-# Observações
+<!-- end_slide -->
+
+Observações
+---
+
+<!-- end_slide -->

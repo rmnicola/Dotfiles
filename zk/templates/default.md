@@ -4,4 +4,10 @@ date: '{{ format-date now "%Y-%m-%d" }}'
 keywords: []
 ---
 
-# Referências
+'{{ title }}'
+---
+
+<!-- end_slide -->
+
+Referências
+---
