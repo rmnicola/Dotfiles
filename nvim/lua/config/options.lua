@@ -3,18 +3,18 @@
 -- https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/options.lua
 -- Add any additional options here
 vim.g.minipairs_disable = true
-vim.opt.autoread = true
-vim.opt.backup = false
-vim.opt.belloff = "all"
-vim.opt.breakindent = true
-vim.opt.colorcolumn = "80"
-vim.opt.complete = ".,w,b,u,t"
-vim.opt.completeopt = "menuone,noinsert,noselect,preview"
-vim.opt.expandtab = true
-vim.opt.laststatus = 0
-vim.opt.makeprg = "make"
-vim.opt.relativenumber = true
-vim.opt.scrolloff = 10
-vim.opt.swapfile = false
-vim.opt.undofile = true
-vim.opt.textwidth = 80
+local opt = vim.opt
+opt.autoread = true
+opt.autowrite = false
+opt.backup = false
+opt.belloff = "all"
+opt.completeopt = "menuone,noinsert,noselect,preview"
+opt.conceallevel = 0
+opt.colorcolumn = "80"
+opt.laststatus = 0
+opt.makeprg = "make"
+opt.relativenumber = true
+opt.scrolloff = 10
+opt.swapfile = false
+opt.textwidth = 80
+opt.wrap = true
