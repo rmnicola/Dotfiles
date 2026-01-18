@@ -1,9 +1,8 @@
 return {
-  -- disable snacks scroll when animate is enabled
   {
-    "snacks.nvim",
+    "folke/snacks.nvim",
     opts = {
-      scroll = { enabled = true },
+      scroll = { enabled = true }, -- Force smooth scroll on
     },
   },
 }
