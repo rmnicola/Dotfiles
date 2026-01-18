@@ -32,7 +32,7 @@ keybinds {
       bind "Alt n" { SwitchToMode "Resize"; }
     }
   shared_except "locked" {
-    bind "Alt t" { NewTab { cwd "."; } }
+    bind "Alt t" { NewTab; }
     bind "Alt f" { ToggleFocusFullscreen; }
     bind "Alt w" { CloseTab; }
     bind "Alt Shift w" { CloseFocus; }
