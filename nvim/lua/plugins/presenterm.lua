@@ -6,7 +6,7 @@ return {
       spec = {
         {
           "<leader>p",
-          group = "Presenterm",
+          group = "presenterm",
           icon = { icon = "  ", color = "azure" }
         }
       },

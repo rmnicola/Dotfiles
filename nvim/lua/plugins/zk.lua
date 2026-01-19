@@ -4,7 +4,7 @@ return {
     optional = true,
     opts = {
       spec = {
-        { "<leader>z", group = "Zk", icon = "" },
+        { "<leader>z", group = "zk", icon = "" },
       },
     },
   },
@@ -87,8 +87,6 @@ return {
                   vim.fn.mkdir(partials_dir, "p")
                 end
 
-                local inserted_links = {}
-
                 for _, item in ipairs(items) do
                   local infile = item.file
                   local raw_filename = vim.fn.fnamemodify(infile, ":t")
@@ -157,7 +155,7 @@ return {
             name = "zk",
             cmd = { "zk", "lsp" },
             filetypes = { "markdown" },
-            on_attach = function(client, bufnr)
+            on_attach = function(_, bufnr)
               -- This explicitly disables diagnostics for the current buffer
               -- as soon as ZK attaches to it.
               vim.diagnostic.enable(false, { bufnr = bufnr })
