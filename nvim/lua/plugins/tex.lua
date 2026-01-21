@@ -1,11 +1,22 @@
--- lua/plugins/tex.lua
 return {
   {
     "lervag/vimtex",
-    lazy = false, -- VimTeX often needs to load early for syntax highlighting
+    lazy = false,
     init = function()
       vim.g.vimtex_view_method = "zathura"
-      vim.g.vimtex_mappings_enabled = 0
+      vim.g.vimtex_compiler_latexmk = {
+        out_dir = "build", -- Envia arquivos de saída para ./build
+        aux_dir = "build", -- Envia arquivos auxiliares para ./build
+        options = {
+          "-verbose",
+          "-file-line-error",
+          "-synctex=1",
+          "-interaction=nonstopmode",
+        },
+      }
     end,
+    opts = {
+      { "<leader>ll", "<cmd>VimtexCompile<cr>", desc = "compile" },
+    }
   },
 }
