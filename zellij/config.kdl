@@ -25,8 +25,6 @@ keybinds {
       unbind "Ctrl o" // Was Session Mode
       unbind "Alt a" // Was Resize Mode
       unbind "Alt o"
-      unbind "Alt j"
-      unbind "Alt k"
 
       // 2. Rebind the missing Zellij actions to new keys (using Alt)
       bind "Alt Shift s" { SwitchToMode "Session"; }
