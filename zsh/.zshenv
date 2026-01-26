@@ -35,11 +35,6 @@ export RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
 # >> Zk notebook
 export ZK_NOTEBOOK_DIR="$HOME/Documents/Zettelkasten"
 
-# >> Go env variables
-export GOROOT=/usr/local/go
-export GOPATH=$HOME/go
-export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
-
 # >> Starship config Folders
 export STARSHIP_CONFIG="$XDG_CONFIG_HOME/starship/starship.toml"
 
