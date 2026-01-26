@@ -1,9 +1,22 @@
 [notebook]
 dir = '/home/rnicola/Documents/Zettelkasten'
 
+[format.markdown]
+# This ensures links use the Title, as you requested
+link-format = "[{{title}}]({{path}})"
+
 [note]
 language = 'en'
 default-title = 'Untitled'
+
+# --- FIX START ---
+# 1. Allow "W" in IDs (e.g. 2026W04) and don't enforce strict number-only matching
+id-charset = "0-9a-zA-Z"
+# 2. Explicitly scan root and subdirectories
+paths = ["."]
+# --- FIX END ---
+
+# Keep your existing creation format
 filename = "{{format-date now 'timestamp'}}-{{slug title}}"
 
 [tool]

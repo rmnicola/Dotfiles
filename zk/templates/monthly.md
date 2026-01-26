@@ -1,7 +1,7 @@
 ---
 title: {{ format-date now "%B %Y" }}
-prev: [[{{sh "date -d 'last month' +%YM%m | tr -d '\n'"}}]]
 keywords: [monthly]
+score: 0
 ---
 
 Objetivos
@@ -11,3 +11,7 @@ Objetivos
 
 Observações
 ---
+
+<!-- end_slide -->
+
+* [Monthly anterior]()
