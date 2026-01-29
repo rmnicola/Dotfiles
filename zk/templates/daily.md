@@ -12,10 +12,8 @@ Tarefas
 Rotina
 ---
 
-* [] Alongamento
 * [] Exercício
 * [] Leitura
-* [] Limpeza
 
 <!-- end_slide -->
 
