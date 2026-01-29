@@ -8,4 +8,5 @@ luasnip.add_snippets("markdown", {
   s("ptinclist", { t("<!-- incremental_lists: true -->"), }),
   s("ptitemlines", { t("<!-- list_item_newlines: 1 -->"), }),
   s("ptskip", { t("<!-- skip_line -->"), }),
+  s("ptimg", { t("![image:width:50%](./assets/)"), }),
 })

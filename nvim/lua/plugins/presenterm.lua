@@ -30,7 +30,7 @@ local function export_pdf()
     end,
     on_exit = function(_, code)
       if code == 0 then
-        vim.notify("Saved to exports/" .. dirname .. ".pdf", vim.log.levels.INFO, { title = "Presenterm" })
+        vim.notify("Saved to export/" .. dirname .. ".pdf", vim.log.levels.INFO, { title = "Presenterm" })
       else
         local raw_error = table.concat(output_lines, "\n")
         local clean_error = raw_error:gsub("\27%[[0-9;]*m", "") -- Remove color codes
