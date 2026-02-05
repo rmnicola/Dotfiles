@@ -1,7 +1,7 @@
 local function start_presentation()
   local file = vim.fn.expand("%:p")
   -- Use quotes to handle paths with spaces
-  local cmd = string.format("hyprctl dispatch exec '[fullscreen] ghostty --font-size=20 -e presenterm \"%s\"'", file)
+  local cmd = string.format("hyprctl dispatch exec '[fullscreen] kitty -o font_size=20 presenterm \"%s\"'", file)
   vim.fn.jobstart(cmd, { detach = true })
 end
 
@@ -16,7 +16,7 @@ local function export_pdf()
   vim.fn.mkdir(output_dir, "p")
   vim.notify("Exporting PDF...", vim.log.levels.INFO, { title = "Presenterm" })
 
-  local cmd = { "presenterm", "--export-pdf", current_file, "--output", output_file }
+  local cmd = { "presenterm", "--export-pdf", "-x", current_file, "--output", output_file }
   local output_lines = {}
 
   vim.fn.jobstart(cmd, {

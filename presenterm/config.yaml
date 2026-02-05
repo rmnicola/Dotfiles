@@ -1,11 +1,14 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/mfontanini/presenterm/master/config-file-schema.json
 defaults:
-  theme: catppuccin-macchiato
+  theme: tokyonight-storm
   terminal_font_size: 16
 options:
   implicit_slide_ends: true
   strict_front_matter_parsing: false
 export:
   dimensions:
-    columns: 80
-    rows: 30
+    columns: 100
+    rows: 28
+snippet:
+  exec:
+    enable: true
