@@ -18,5 +18,5 @@ Rotina
 <!-- end_slide -->
 
 * [Daily anterior]()
-* [Weekly]()
+* [Weekly](/journal/{{format-date now "%YW%U"}})
 * [Monthly]()
