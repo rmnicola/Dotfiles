@@ -14,4 +14,4 @@ Observações
 
 <!-- end_slide -->
 
-* [Monthly anterior]()
+* [Monthly anterior](/journal/{{sh "date -d 'last month' +%YM%m | tr -d '\n'"}})

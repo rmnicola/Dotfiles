@@ -17,6 +17,6 @@ Rotina
 
 <!-- end_slide -->
 
-* [Daily anterior]()
+* [Daily anterior](/journal/{{sh "date -d yesterday +%Y%m%d | tr -d '\n'"}})
 * [Weekly](/journal/{{format-date now "%YW%U"}})
-* [Monthly]()
+* [Monthly](/journal/{{format-date now "%YM%m"}})

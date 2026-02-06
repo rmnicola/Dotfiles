@@ -14,5 +14,5 @@ Observações
 
 <!-- end_slide -->
 
-* [Weekly anterior]()
-* [Monthly]()
+* [Weekly anterior](/journal/{{sh "date -d 'last week' +%YW%U | tr -d '\n'"}})
+* [Monthly](/journal/{{format-date now "%YM%m"}})
