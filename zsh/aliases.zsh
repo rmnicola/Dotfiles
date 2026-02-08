@@ -36,3 +36,7 @@ alias gs="git status"
 alias ga="git add"
 alias gp="git push"
 alias gc="git commit"
+
+# Opencode
+alias ocp='OPENCODE_CONFIG_DIR=~/.config/opencode opencode'
+alias oci='OPENCODE_CONFIG_DIR=~/.config/opencode-inteli opencode'
