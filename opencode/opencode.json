@@ -1,7 +1,9 @@
 {
   "$schema": "https://opencode.ai/config.json",
-  "theme": "system",
-  "model": "anthropic/claude-sonnet-4-5",
-  "small_model": "anthropic/claude-haiku-4-5",
-  "disabled_providers": ["gemini"]
+  "theme": "catppuccin-macchiato",
+  "plugin": [
+    "opencode-gemini-auth@1.3.10"
+  ],
+  "model": "google/gemini-3-pro-preview",
+  "small_model": "google/gemini-3-flash-preview",
 }
