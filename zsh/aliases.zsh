@@ -38,5 +38,4 @@ alias gp="git push"
 alias gc="git commit"
 
 # Opencode
-alias ocp='OPENCODE_CONFIG_DIR=~/.config/opencode-personal opencode --port'
-alias oci='OPENCODE_CONFIG_DIR=~/.config/opencode opencode --port'
+alias oc='OPENCODE_CONFIG_DIR=~/.config/opencode opencode --port'
