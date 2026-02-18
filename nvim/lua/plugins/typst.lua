@@ -2,22 +2,22 @@
 
 local function get_project_info()
   local cwd = vim.fn.getcwd()
-  local dirname = vim.fn.fnamemodify(cwd, ":t")
-  -- Remove leading dot from dirname (e.g., .inteli-template -> inteli-template)
-  local pdf_name = dirname:gsub("^%.", "")
-  local pdf_path = cwd .. "/build/" .. pdf_name .. ".pdf"
-  return cwd, pdf_name, pdf_path
+  local filename_with_path = vim.fn.expand("%:r")
+  local filename = vim.fn.fnamemodify(filename_with_path, ":t")
+  local pdf_path = cwd .. "/build/" .. filename .. ".pdf"
+  return cwd, filename, pdf_path
 end
 
 local function typst_watch()
-  local cwd, dirname, _ = get_project_info()
+  local cwd, filename, _ = get_project_info()
+  local current_file = vim.fn.expand("%:p")
 
   -- Ensure build directory exists
   vim.fn.mkdir(cwd .. "/build", "p")
 
-  -- Check if main.typ exists
-  if vim.fn.filereadable(cwd .. "/main.typ") == 0 then
-    vim.notify("main.typ not found in " .. cwd, vim.log.levels.ERROR, { title = "Typst" })
+  -- Check if current file exists
+  if vim.fn.filereadable(current_file) == 0 then
+    vim.notify("Current file not found: " .. current_file, vim.log.levels.ERROR, { title = "Typst" })
     return
   end
 
@@ -27,13 +27,14 @@ local function typst_watch()
 
   -- Start typst watch detached - let it run free
   local watch_cmd = string.format(
-    "cd %s && nohup typst watch main.typ build/%s.pdf > /dev/null 2>&1 &",
+    "cd %s && nohup typst watch %s build/%s.pdf > /dev/null 2>&1 &",
     vim.fn.shellescape(cwd),
-    dirname
+    vim.fn.shellescape(current_file),
+    filename
   )
   vim.fn.system(watch_cmd)
 
-  vim.notify("Typst watch started for " .. dirname, vim.log.levels.INFO, { title = "Typst" })
+  vim.notify("Typst watch started for " .. filename, vim.log.levels.INFO, { title = "Typst" })
 end
 
 local function typst_present()
@@ -56,28 +57,37 @@ end
 local function typst_include_partials()
   local cwd = vim.fn.getcwd()
   local sections_dir = cwd .. "/sections"
+  local problems_dir = cwd .. "/problems"
 
-  -- Check if sections directory exists
-  if vim.fn.isdirectory(sections_dir) == 0 then
-    vim.notify("No sections directory found in " .. cwd, vim.log.levels.ERROR, { title = "Typst" })
-    return
-  end
-
-  -- Get list of .typ files in sections directory
-  local files = vim.fn.glob(sections_dir .. "/*.typ", false, true)
-  if #files == 0 then
-    vim.notify("No .typ files found in sections/", vim.log.levels.WARN, { title = "Typst" })
-    return
-  end
-
-  -- Prepare items for picker
   local items = {}
-  for _, filepath in ipairs(files) do
-    local filename = vim.fn.fnamemodify(filepath, ":t")
-    table.insert(items, {
-      text = filename,
-      file = filepath,
-    })
+
+  -- Check sections directory
+  if vim.fn.isdirectory(sections_dir) == 1 then
+    local section_files = vim.fn.glob(sections_dir .. "/*.typ", false, true)
+    for _, filepath in ipairs(section_files) do
+      local filename = vim.fn.fnamemodify(filepath, ":t")
+      table.insert(items, {
+        text = filename,
+        dir = "sections",
+      })
+    end
+  end
+
+  -- Check problems directory
+  if vim.fn.isdirectory(problems_dir) == 1 then
+    local problem_files = vim.fn.glob(problems_dir .. "/*.typ", false, true)
+    for _, filepath in ipairs(problem_files) do
+      local filename = vim.fn.fnamemodify(filepath, ":t")
+      table.insert(items, {
+        text = filename,
+        dir = "problems",
+      })
+    end
+  end
+
+  if #items == 0 then
+    vim.notify("No .typ files found in sections/ or problems/", vim.log.levels.WARN, { title = "Typst" })
+    return
   end
 
   -- Use vim.ui.select for simple picker
@@ -91,8 +101,14 @@ local function typst_include_partials()
     kind = "typst_partials",
   }, function(choice)
     if choice then
-      local include_line = string.format('#include "sections/%s"', choice)
-      vim.api.nvim_put({ include_line }, "l", true, true)
+      -- Find the selected item to get the directory
+      for _, item in ipairs(items) do
+        if item.text == choice then
+          local include_line = string.format('#include "%s/%s"', item.dir, choice)
+          vim.api.nvim_put({ include_line }, "l", true, true)
+          break
+        end
+      end
     end
   end)
 end
