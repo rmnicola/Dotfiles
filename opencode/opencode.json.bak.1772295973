@@ -1,0 +1,6 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "theme": "catppuccin-macchiato",
+  "model": "opencode/Kimi K2.5 Free",
+  "small_model": "opencode/Kimi K2.5 Free",
+}

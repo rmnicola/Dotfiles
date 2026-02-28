@@ -1,9 +1,5 @@
 {
   "$schema": "https://opencode.ai/config.json",
-  "theme": "catppuccin-macchiato",
-  "plugin": [
-    "opencode-gemini-auth@1.3.10"
-  ],
-  "model": "opencode/Kimi K2.5 Free",
-  "small_model": "opencode/Kimi K2.5 Free",
+  "theme": "nord",
+  "autoupdate": false
 }
