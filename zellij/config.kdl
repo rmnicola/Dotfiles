@@ -57,3 +57,4 @@ default_shell "zsh"
 pane_frames false
 attach_to_session true
 show_startup_tips false
+post_command_discovery_hook "echo \"\""
