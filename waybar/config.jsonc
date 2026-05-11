@@ -5,11 +5,12 @@
   "spacing": 0,
   "height": 20,
   "modules-left": ["custom/omarchy", "hyprland/workspaces"],
-  "modules-center": ["clock", "custom/update", "custom/voxtype", "custom/screenrecording-indicator", "custom/idle-indicator", "custom/notification-silencing-indicator"],
+  "modules-center": ["clock", "custom/update", "custom/screenrecording-indicator", "custom/idle-indicator", "custom/notification-silencing-indicator"],
   "modules-right": [
     "group/tray-expander",
     "bluetooth",
     "network",
+    "custom/hyprwhspr",
     "pulseaudio",
     "cpu",
     "battery"
@@ -74,8 +75,8 @@
     "format-wifi": "{icon}",
     "format-ethernet": "󰀂",
     "format-disconnected": "󰤮",
-    "tooltip-format-wifi": "{essid} ({frequency} GHz)\n⇣{bandwidthDownBytes}  ⇡{bandwidthUpBytes}",
-    "tooltip-format-ethernet": "⇣{bandwidthDownBytes}  ⇡{bandwidthUpBytes}",
+    "tooltip-format-wifi": "{essid} ({frequency} GHz)",
+    "tooltip-format-ethernet": "Connected",
     "tooltip-format-disconnected": "Disconnected",
     "interval": 3,
     "spacing": 1,
@@ -140,18 +141,22 @@
     "signal": 8,
     "return-type": "json"
   },
-  "custom/voxtype": {
-    "exec": "omarchy-voxtype-status",
+  "custom/hyprwhspr": {
+    "exec": "/usr/lib/hyprwhspr/config/hyprland/hyprwhspr-tray.sh status | jq -c '. + {alt: .class}'",
+    "interval": 1,
     "return-type": "json",
     "format": "{icon}",
-    "format-icons": {
-      "idle": "",
+        "format-icons": {
+      "default": "󰍬",
+      "ready": "󰍬",
+      "idle": "󰍬",
       "recording": "󰍬",
-      "transcribing": "󰔟"
+      "transcribing": "󰔟",
+      "error": "󰍬"
     },
     "tooltip": true,
-    "on-click-right": "omarchy-voxtype-config",
-    "on-click": "omarchy-voxtype-model"
+    "on-click": "/usr/lib/hyprwhspr/config/hyprland/hyprwhspr-tray.sh record",
+    "on-click-right": "/usr/lib/hyprwhspr/config/hyprland/hyprwhspr-tray.sh restart"
   },
   "custom/idle-indicator": {
     "on-click": "omarchy-toggle-idle",

@@ -33,6 +33,7 @@
 #cpu,
 #battery,
 #pulseaudio,
+#custom-hyprwhspr,
 #custom-omarchy,
 
 #custom-update {
@@ -87,13 +88,20 @@ tooltip {
   color: #a55555;
 }
 
-#custom-voxtype {
-  min-width: 12px;
-  margin: 0 0 0 7.5px;
+#custom-hyprwhspr {
+  margin-right: 3px;
 }
 
-#custom-voxtype.recording {
+#custom-hyprwhspr.recording {
   color: #a55555;
+}
+
+#custom-hyprwhspr.transcribing {
+  color: #d4a017;
+}
+
+#custom-hyprwhspr.error {
+  color: #cc4444;
 }
 
 #custom-idle-indicator.active,
