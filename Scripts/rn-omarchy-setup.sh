@@ -5,10 +5,27 @@
 # The Orchestrator for all configuration scripts
 # ==========================================
 
+set -o pipefail
+
 # Configuration
 SCRIPT_DIR=$(dirname "$(readlink -f "$0")")
 CLEANER_URL="https://raw.githubusercontent.com/maxart/omarchy-cleaner/main/omarchy-cleaner.sh"
 AUTO_MODE=false
+NO_REBOOT=false
+
+bootstrap_gum() {
+    if command -v gum &> /dev/null; then
+        return 0
+    fi
+
+    echo "gum is not installed. Installing it with pacman..."
+    if ! command -v pacman &> /dev/null; then
+        echo "Error: pacman is required to bootstrap gum."
+        exit 1
+    fi
+
+    sudo pacman -S --needed --noconfirm gum
+}
 
 usage() {
     echo "Usage: $0 [--all] [--no-reboot]"
@@ -50,7 +67,7 @@ run_script() {
 
     if [[ ! -f "$SCRIPT_DIR/$script_name" ]]; then
         gum style --foreground 196 "   Error: '$script_name' not found in $SCRIPT_DIR"
-        return 1
+        exit 1
     fi
 
     if [[ ! -x "$SCRIPT_DIR/$script_name" ]]; then
@@ -62,7 +79,7 @@ run_script() {
         return 0
     else
         gum style --foreground 196 "   ✗ $title failed."
-        return 1
+        exit 1
     fi
 }
 
@@ -75,6 +92,7 @@ run_cleaner() {
             gum style --foreground 82 "   ✓ System cleaning complete."
         else
             gum style --foreground 196 "   ✗ Cleaner script failed."
+            return 1
         fi
         return
     fi
@@ -84,6 +102,7 @@ run_cleaner() {
             gum style --foreground 82 "   ✓ System cleaning complete."
         else
             gum style --foreground 196 "   ✗ Cleaner script failed or was cancelled."
+            return 1
         fi
     else
         gum style --foreground 240 "   Skipped Cleaner."
@@ -104,10 +123,7 @@ while [[ "$#" -gt 0 ]]; do
     shift
 done
 
-if ! command -v gum &> /dev/null; then
-    echo "Error: gum is not installed. Please install it manually first."
-    exit 1
-fi
+bootstrap_gum
 
 show_header
 
@@ -119,9 +135,9 @@ if [[ "$AUTO_MODE" == "true" ]]; then
 3. Install packages
 4. Install dotfiles
 5. Configure zsh
-6. Configure power management
-7. Configure git
-8. Run cleaner script"
+6. Configure power management"
+    gum log --level warn "Auto mode skips SSH/Git user configuration because it requires personal input."
+    gum log --level warn "Auto mode skips Omarchy Cleaner because the external script is interactive."
 else
     declare -a STEPS=(
         "1. Install dependencies"
@@ -145,7 +161,7 @@ fi
 
 # --- Execution ---
 if [[ "$SELECTED_STEPS" == *"1. Install dependencies"* ]]; then
-    run_script "System dependencies" "rn-install-packages.sh" "-s" "Depend" "-a"
+    run_script "System dependencies" "rn-install-packages.sh" "--section" "Depend" "--all"
 fi
 
 if [[ "$SELECTED_STEPS" == *"2. Configure rust"* ]]; then
@@ -153,7 +169,7 @@ if [[ "$SELECTED_STEPS" == *"2. Configure rust"* ]]; then
 fi
 
 if [[ "$SELECTED_STEPS" == *"3. Install packages"* ]]; then
-    run_script "Package installation" "rn-install-packages.sh" "-e" "Depend"
+    run_script "Package installation" "rn-install-packages.sh" "--exclude" "Depend" "--all"
 fi
 
 if [[ "$SELECTED_STEPS" == *"4. Install dotfiles"* ]]; then
@@ -174,7 +190,7 @@ if [[ "$SELECTED_STEPS" == *"7. Configure git"* ]]; then
 fi
 
 if [[ "$SELECTED_STEPS" == *"8. Run cleaner script"* ]]; then
-    run_cleaner
+    run_cleaner || exit 1
 fi
 
 # ==========================================

@@ -52,21 +52,21 @@ link_config() {
     local DEST_PATH="$CONFIG_DIR/$item"
 
     # Skip if symlink already points to the right place
-    if [ -L "$DEST_PATH" ] && [ "$(readlink "$DEST_PATH")" = "$SOURCE_PATH" ]; then
+    if [[ -L "$DEST_PATH" ]] && [[ "$(readlink "$DEST_PATH")" == "$SOURCE_PATH" ]]; then
         gum log --level info "  ✓ $item already linked correctly. Skipping."
-        ((success_count++))
+        ((success_count += 1))
         return
     fi
 
     # Backup existing file/dir/symlink
-    if [ -e "$DEST_PATH" ] || [ -L "$DEST_PATH" ]; then
+    if [[ -e "$DEST_PATH" ]] || [[ -L "$DEST_PATH" ]]; then
         BACKUP_NAME="${item}.backup.$(date +%s)"
         gum log --level warn "  Collision: ~/.config/$item exists."
         if mv "$DEST_PATH" "$CONFIG_DIR/$BACKUP_NAME" 2>/dev/null; then
             gum log --level info "  ↳ Backed up to ~/.config/$BACKUP_NAME"
         else
             gum log --level error "  ✗ Failed to backup $item."
-            ((fail_count++))
+            ((fail_count += 1))
             return
         fi
     fi
@@ -74,10 +74,10 @@ link_config() {
     # Create symlink
     if ln -s "$SOURCE_PATH" "$DEST_PATH" 2>/dev/null; then
         gum log --level info "  ✓ Linked: $item -> ~/.config/$item"
-        ((success_count++))
+        ((success_count += 1))
     else
         gum log --level error "  ✗ Failed to create symlink for $item."
-        ((fail_count++))
+        ((fail_count += 1))
     fi
 }
 
@@ -140,9 +140,17 @@ fi
 # 4. Scan configs
 cd "$TARGET_DIR" || exit 1
 
-mapfile -t AVAILABLE_CONFIGS < <(find . -maxdepth 1 -type d -not -path '*/.*' -not -path '.' -printf '%P\n' | grep -v '^keyd$' | grep -v '^Scripts$' | sort)
+mapfile -t AVAILABLE_CONFIGS < <(
+    find . -maxdepth 1 -type d \
+        -not -path '*/.*' \
+        -not -path '.' \
+        -not -name 'keyd' \
+        -not -name 'Scripts' \
+        -printf '%P\n' \
+        | sort
+)
 
-if [ ${#AVAILABLE_CONFIGS[@]} -eq 0 ]; then
+if [[ ${#AVAILABLE_CONFIGS[@]} -eq 0 ]]; then
     gum log --level warn "No config directories found."
     exit 0
 fi
@@ -178,7 +186,7 @@ while IFS= read -r item; do
 done <<< "$SELECTED_ITEMS"
 
 # 7. Summary
-if [ $fail_count -eq 0 ]; then
+if [[ $fail_count -eq 0 ]]; then
     gum style --foreground 82 "Success! $success_count configurations linked."
 else
     gum style --foreground 214 "Completed with issues. Success: $success_count, Failed: $fail_count"

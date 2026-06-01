@@ -122,7 +122,7 @@ sudo reboot
 | `rn-install-rust.sh` | Already non-interactive |
 | `rn-configure-zsh.sh` | Already non-interactive |
 | `rn-configure-tlp.sh` | Already non-interactive |
-| `rn-omarchy-setup.sh` | `--all --no-reboot` (run all steps unattended) |
+| `rn-omarchy-setup.sh` | `--all --no-reboot` (run unattended setup; skips interactive Git/SSH and Cleaner) |
 | `rn-configure-git.sh` | Interactive only (needs name/email) |
 | `rn-generate-ssh-key.sh` | Interactive only (needs key name) |
 

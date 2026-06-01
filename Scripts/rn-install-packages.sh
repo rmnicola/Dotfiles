@@ -27,6 +27,46 @@ EXCLUDE_SECTIONS=""
 FINAL_INSTALL_LIST=()
 FINAL_REMOVE_LIST=()
 
+ensure_gum() {
+    if command -v gum &> /dev/null; then
+        return 0
+    fi
+
+    echo "gum is not installed. Installing it with pacman..."
+    sudo pacman -S --needed --noconfirm gum
+}
+
+ensure_yay() {
+    if command -v yay &> /dev/null; then
+        return 0
+    fi
+
+    gum log --level warn "yay is not installed. Bootstrapping yay-bin from AUR..."
+    sudo pacman -S --needed --noconfirm base-devel git
+
+    local build_dir
+    build_dir=$(mktemp -d)
+
+    if ! git clone https://aur.archlinux.org/yay-bin.git "$build_dir/yay-bin"; then
+        rm -rf "$build_dir"
+        gum log --level error "Failed to clone yay-bin from AUR."
+        exit 1
+    fi
+
+    if ! (cd "$build_dir/yay-bin" && makepkg -si --needed --noconfirm); then
+        rm -rf "$build_dir"
+        gum log --level error "Failed to build/install yay-bin."
+        exit 1
+    fi
+
+    rm -rf "$build_dir"
+
+    if ! command -v yay &> /dev/null; then
+        gum log --level error "yay was not found after installation."
+        exit 1
+    fi
+}
+
 # ==========================================
 # UI Functions
 # ==========================================
@@ -217,17 +257,19 @@ perform_installation() {
     done
 
     show_summary "$total" "${#failed_packages[@]}"
+
+    if [[ ${#failed_packages[@]} -gt 0 ]]; then
+        return 1
+    fi
 }
 
 # ==========================================
 # Main Execution
 # ==========================================
 
-# Dependency Check
-if ! command -v gum &> /dev/null; then
-    echo "Error: gum is not installed."
-    exit 1
-fi
+# Dependency bootstrap
+ensure_gum
+ensure_yay
 
 # Argument Parsing
 while [[ "$#" -gt 0 ]]; do

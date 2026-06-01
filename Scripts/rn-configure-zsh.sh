@@ -40,7 +40,7 @@ if ! command -v zsh &> /dev/null; then
             gum spin --spinner dot --title "Installing zsh..." -- sudo apt install -y zsh
             ;;
         arch)
-            gum spin --spinner dot --title "Pacman install..." -- sudo pacman -Syu --noconfirm zsh
+            gum spin --spinner dot --title "Pacman install..." -- sudo pacman -S --needed --noconfirm zsh
             ;;
         *)
             gum log --level error "Unsupported distribution: $DISTRO"
@@ -59,8 +59,8 @@ if [[ "$CURRENT_SHELL" != "zsh" ]]; then
     gum style --foreground 212 "Changing default shell to Zsh..."
     gum style --foreground 240 --italic "(You may be asked for your password)"
     
-    TARGET_ZSH=$(which zsh)
-    if chsh -s "$TARGET_ZSH"; then
+    TARGET_ZSH=$(command -v zsh)
+    if sudo chsh -s "$TARGET_ZSH" "$USER"; then
         gum log --level info "✓ Default shell changed to $TARGET_ZSH"
     else
         gum log --level warn "⚠ Failed to change shell automatically. You may need to do this manually."

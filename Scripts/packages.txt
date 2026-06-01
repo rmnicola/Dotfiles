@@ -1,8 +1,13 @@
+# Depend
+base-devel
+git
+gum
+yay-bin
+
 # System
 tlp
 zsh
 zellij
-base-devel
 kitty
 profile-cleaner
 python-weasyprint
@@ -15,7 +20,6 @@ zk
 opencode-bin
 
 # Terminal
-gum
 eilmeldung-bin
 figlet
 w3m
