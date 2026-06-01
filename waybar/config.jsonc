@@ -19,6 +19,7 @@
     "on-click": "activate",
     "format": "{icon}",
     "format-special": "◉",
+    "show-special": true,
     "format-icons": {
       "default": "",
       "1": "一",
