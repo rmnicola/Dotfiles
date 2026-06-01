@@ -1,0 +1,33 @@
+# System
+tlp
+zsh
+zellij
+base-devel
+kitty
+profile-cleaner
+python-weasyprint
+typst
+lsof
+keyd
+
+# TUI Applications
+zk
+opencode-bin
+
+# Terminal
+gum
+eilmeldung-bin
+figlet
+w3m
+rdrview
+
+# Dev tools
+gemini-cli
+micromamba-bin
+fnm-bin
+go
+
+# Others
+zathura
+zotero-bin
+ttf-manrope
