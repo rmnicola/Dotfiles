@@ -26,5 +26,5 @@ _rn_scripts() {
     fi
 }
 
-compdef _rn_scripts rn-*
+compdef _rn_scripts 'rn-*'
 END_COMP
