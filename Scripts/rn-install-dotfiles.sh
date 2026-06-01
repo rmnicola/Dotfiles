@@ -50,10 +50,14 @@ link_config() {
     local item="$1"
     local SOURCE_PATH="$TARGET_DIR/$item"
     local DEST_PATH="$CONFIG_DIR/$item"
+    local backup_path=""
 
     # Skip if symlink already points to the right place
     if [[ -L "$DEST_PATH" ]] && [[ "$(readlink "$DEST_PATH")" == "$SOURCE_PATH" ]]; then
         gum log --level info "  ✓ $item already linked correctly. Skipping."
+        if [[ "$item" == "omarchy" ]]; then
+            ensure_omarchy_runtime_state ""
+        fi
         ((success_count += 1))
         return
     fi
@@ -61,8 +65,9 @@ link_config() {
     # Backup existing file/dir/symlink
     if [[ -e "$DEST_PATH" ]] || [[ -L "$DEST_PATH" ]]; then
         BACKUP_NAME="${item}.backup.$(date +%s)"
+        backup_path="$CONFIG_DIR/$BACKUP_NAME"
         gum log --level warn "  Collision: ~/.config/$item exists."
-        if mv "$DEST_PATH" "$CONFIG_DIR/$BACKUP_NAME" 2>/dev/null; then
+        if mv "$DEST_PATH" "$backup_path" 2>/dev/null; then
             gum log --level info "  ↳ Backed up to ~/.config/$BACKUP_NAME"
         else
             gum log --level error "  ✗ Failed to backup $item."
@@ -74,11 +79,54 @@ link_config() {
     # Create symlink
     if ln -s "$SOURCE_PATH" "$DEST_PATH" 2>/dev/null; then
         gum log --level info "  ✓ Linked: $item -> ~/.config/$item"
+        if [[ "$item" == "omarchy" ]]; then
+            ensure_omarchy_runtime_state "$backup_path"
+        fi
         ((success_count += 1))
     else
         gum log --level error "  ✗ Failed to create symlink for $item."
         ((fail_count += 1))
     fi
+}
+
+update_submodules() {
+    if [[ -f "$TARGET_DIR/.gitmodules" ]]; then
+        gum log --level info "Updating git submodules..."
+        if ! (cd "$TARGET_DIR" && git submodule update --init --recursive); then
+            gum log --level error "Failed to update git submodules."
+            exit 1
+        fi
+    fi
+}
+
+ensure_omarchy_runtime_state() {
+    local backup_path="$1"
+    local omarchy_config="$CONFIG_DIR/omarchy"
+    local current_dir="$omarchy_config/current"
+    local toggles_dir="$HOME/.local/state/omarchy/toggles/hypr"
+
+    mkdir -p "$toggles_dir"
+    touch "$toggles_dir/empty.conf"
+
+    if [[ -e "$current_dir/theme/hyprland.conf" ]]; then
+        return
+    fi
+
+    if [[ -n "$backup_path" ]] && [[ -d "$backup_path/current" ]]; then
+        mkdir -p "$omarchy_config"
+        cp -a "$backup_path/current" "$current_dir"
+        gum log --level info "  ↳ Restored Omarchy current theme state from backup."
+        return
+    fi
+
+    mkdir -p "$current_dir/theme"
+    touch \
+        "$current_dir/theme/hyprland.conf" \
+        "$current_dir/theme/hyprlock.conf" \
+        "$current_dir/theme/waybar.css" \
+        "$current_dir/theme/alacritty.toml" \
+        "$current_dir/theme/ghostty.conf"
+    gum log --level warn "  ↳ Created minimal Omarchy current theme fallback. Run 'omarchy theme set <theme>' after setup."
 }
 
 # ==========================================
@@ -136,6 +184,8 @@ else
     fi
     gum log --level info "✓ Cloned successfully."
 fi
+
+update_submodules
 
 # 4. Scan configs
 cd "$TARGET_DIR" || exit 1

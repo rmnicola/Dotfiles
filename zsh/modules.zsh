@@ -16,7 +16,11 @@ autoload -U zmv			# zmv lets you easily rename files
 autoload -U history-search-end 	# go straight to the end of history line
 
 # >> Zsh syntax highlighting by zsh-users (git submodule)
-source $ZDOTDIR/modules/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+if [[ -f "$ZDOTDIR/modules/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ]]; then
+  source "$ZDOTDIR/modules/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+elif [[ -f /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]]; then
+  source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+fi
 
 # >> Zsh completions by zsh-users (git submodule)
 # Add every completion to fpath

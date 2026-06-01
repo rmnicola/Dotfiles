@@ -8,9 +8,10 @@
 set -e
 set -o pipefail
 
-DOTFILES_DIR="${1:-$HOME/Documents/Dotfiles}"
+DOTFILES_DIR="$HOME/Documents/Dotfiles"
 KEYD_SOURCE="$DOTFILES_DIR/keyd/default.conf"
 KEYD_DEST="/etc/keyd/default.conf"
+AUTO_MODE=false
 
 # ==========================================
 # UI Helpers
@@ -32,9 +33,12 @@ show_header() {
 }
 
 usage() {
-    echo "Usage: $0 [dotfiles-path]"
+    echo "Usage: $0 [--auto] [dotfiles-path]"
     echo ""
     echo "Installs keyd configuration from dotfiles to /etc/keyd/default.conf"
+    echo ""
+    echo "Options:"
+    echo "  --auto         Restart keyd without prompting"
     echo ""
     echo "Arguments:"
     echo "  dotfiles-path  Path to dotfiles directory (default: ~/Documents/Dotfiles)"
@@ -52,6 +56,22 @@ usage() {
 if [[ "$1" == "-h" || "$1" == "--help" ]]; then
     usage
 fi
+
+while [[ "$#" -gt 0 ]]; do
+    case "$1" in
+        --auto)
+            AUTO_MODE=true
+            ;;
+        -h|--help)
+            usage
+            ;;
+        *)
+            DOTFILES_DIR="$1"
+            KEYD_SOURCE="$DOTFILES_DIR/keyd/default.conf"
+            ;;
+    esac
+    shift
+done
 
 show_header
 
@@ -100,14 +120,16 @@ gum spin --spinner line --title "Installing keyd configuration..." -- \
 # Set ownership and permissions
 sudo chown root:root "$KEYD_DEST"
 sudo chmod 644 "$KEYD_DEST"
+sudo systemctl enable keyd
 
 gum log --level info "✓ Installed keyd configuration"
 gum log --level info "  Owner: root:root"
 gum log --level info "  Permissions: 644"
+gum log --level info "  Service: enabled"
 echo ""
 
-# Ask to restart keyd service
-if gum confirm "Restart keyd service to apply changes?"; then
+# Restart keyd service
+if [[ "$AUTO_MODE" == "true" ]] || gum confirm "Restart keyd service to apply changes?"; then
     if sudo systemctl restart keyd; then
         gum log --level info "✓ Keyd service restarted"
     else

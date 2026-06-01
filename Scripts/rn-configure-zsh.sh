@@ -4,6 +4,24 @@
 # Omarchy Zsh Configuration
 # ==========================================
 
+SCRIPT_DIR=$(dirname "$(readlink -f "$0")")
+DOTFILES_DIR=$(dirname "$SCRIPT_DIR")
+
+update_zsh_submodules() {
+    if [[ -f "$DOTFILES_DIR/.gitmodules" ]]; then
+        gum log --level info "Updating Zsh plugin submodules..."
+        if ! (
+            cd "$DOTFILES_DIR" \
+                && git submodule update --init --recursive \
+                    zsh/modules/zsh-syntax-highlighting \
+                    zsh/modules/zsh-completions
+        ); then
+            gum log --level error "Failed to update Zsh plugin submodules."
+            exit 1
+        fi
+    fi
+}
+
 # Visual Header
 clear
 gum style --foreground 212 --bold "🐚 Zsh Configuration"
@@ -51,6 +69,8 @@ if ! command -v zsh &> /dev/null; then
 else
     gum log --level info "✓ Zsh is already installed."
 fi
+
+update_zsh_submodules
 
 # 3. Set Default Shell
 CURRENT_SHELL=$(basename "$SHELL")
