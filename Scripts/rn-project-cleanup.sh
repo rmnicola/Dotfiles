@@ -98,10 +98,12 @@ else
             echo "       [Auto] Deleting..."
             rm -rf "$profile_path"
             echo "       ✅ Deleted."
+            notify-send "🧹 Profile cleaned" "Removed orphan: $profile_name ($size)"
         else
             if gum confirm "Delete profile '$profile_name' ($size)?"; then
                 rm -rf "$profile_path"
                 echo "       ✅ Deleted."
+                notify-send "🧹 Profile cleaned" "Removed: $profile_name"
             else
                 echo "       ⏭️  Skipped."
             fi
@@ -117,19 +119,11 @@ echo "   (Vacuuming sqlite databases to save space)"
 echo "---------------------------------------------"
 
 echo "   🚀 Processing: base chromium"
-profile-cleaner c
+profile-cleaner c 2>/dev/null || true
 echo "---------------------------------------------"
 
-for profile_path in "$PROFILES_ROOT"/*; do
-    [[ -d "$profile_path" ]] || continue
-    profile_name=$(basename "$profile_path")
-    echo "   🚀 Processing: $profile_name"
-    profile-cleaner p "$profile_path"
-    echo "---------------------------------------------"
-done
-
-echo "✅ Cleanup and optimization complete."
-notify-send "🧹 Cleanup Complete" "Browser profiles cleaned and optimized."
+echo "✅ Cleanup complete."
+notify-send "🧹 Cleanup Complete" "Browser profiles cleaned."
 
 if [[ "$AUTO_MODE" == "false" ]]; then
     read -rp "Press any key to exit..."

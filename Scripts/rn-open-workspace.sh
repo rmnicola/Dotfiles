@@ -97,26 +97,40 @@ case "$CATEGORY" in
 esac
 
 if [[ -z "$SELECTED_DIR" ]]; then
-    selected_item=$(find "$root_dir" -mindepth 1 -maxdepth 1 -type d \
-        -not -name '.*' -printf '%f\n' | sort \
+    # Build list of existing items
+    existing_dirs=$(find "$root_dir" -mindepth 1 -maxdepth 1 -type d \
+        -not -name '.*' -printf '%f\n' | sort)
+
+    selected_item=$(echo "$existing_dirs" \
         | walker --dmenu --placeholder "Select or type (user/repo …) …")
     [[ -z "$selected_item" ]] && exit 0
 
-    # Split: "user/repo" or "user/repo custom-name" or just "name"
-    read -r first_arg second_arg <<< "$selected_item"
-    rest_args="${selected_item#$first_arg }"
-    [[ "$rest_args" == "$selected_item" ]] && rest_args=""
+    # Check if selection matches an existing directory (case-insensitive)
+    is_existing=false
+    while IFS= read -r dir; do
+        if [[ "${dir,,}" == "${selected_item,,}" ]]; then
+            selected_item="$dir"  # use the actual directory name
+            is_existing=true
+            break
+        fi
+    done <<< "$existing_dirs"
+
+    if [[ "$is_existing" == "true" ]]; then
+        SELECTED_DIR="$selected_item"
+        FULL_PATH="$root_dir/$SELECTED_DIR"
 
     # --- GitHub clone ---
-    if [[ "$first_arg" =~ ^[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+$ ]] || [[ "$first_arg" =~ github\.com ]]; then
-        if [[ "$first_arg" =~ github\.com ]]; then
-            REPO_URL="$first_arg"
+    elif [[ "$selected_item" =~ ^[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+(\ [A-Za-z0-9_.-]+)?$ ]] || [[ "$selected_item" =~ github\.com ]]; then
+        read -r repo_input custom_name <<< "$selected_item"
+
+        if [[ "$repo_input" =~ github\.com ]]; then
+            REPO_URL="$repo_input"
         else
-            REPO_URL="https://github.com/${first_arg}.git"
+            REPO_URL="https://github.com/${repo_input}.git"
         fi
 
-        if [[ -n "$rest_args" ]]; then
-            SELECTED_DIR="$rest_args"
+        if [[ -n "$custom_name" ]]; then
+            SELECTED_DIR="$custom_name"
         else
             SELECTED_DIR=$(basename "$REPO_URL" .git)
         fi
@@ -126,25 +140,22 @@ if [[ -z "$SELECTED_DIR" ]]; then
         if [[ -d "$FULL_PATH" ]]; then
             notify-send "Workspace Launcher" "Already exists — opening $SELECTED_DIR"
         else
-            notify-send "Workspace Launcher" "Cloning $first_arg → $SELECTED_DIR"
+            notify-send "Workspace Launcher" "Cloning $repo_input → $SELECTED_DIR"
             git clone "$REPO_URL" "$FULL_PATH" || {
                 notify-send -u critical "Workspace Launcher" "Clone failed"
                 exit 1
             }
         fi
 
-    # --- Existing or new directory ---
+    # --- Create new directory ---
     else
         SELECTED_DIR="$selected_item"
         FULL_PATH="$root_dir/$SELECTED_DIR"
-
-        if [[ ! -d "$FULL_PATH" ]]; then
-            mkdir -p "$FULL_PATH"
-            if [[ "$CATEGORY" == "disciplinas" ]]; then
-                mkdir -p "$FULL_PATH"/{aulas,atividades,projeto,provas,correcoes/{projeto,atividades,provas}}
-            fi
-            notify-send "Workspace Launcher" "Created $SELECTED_DIR"
+        mkdir -p "$FULL_PATH"
+        if [[ "$CATEGORY" == "disciplinas" ]]; then
+            mkdir -p "$FULL_PATH"/{aulas,atividades,projeto,provas,correcoes/{projeto,atividades,provas}}
         fi
+        notify-send "Workspace Launcher" "Created $SELECTED_DIR"
     fi
 fi
 
