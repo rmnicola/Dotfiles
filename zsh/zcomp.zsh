@@ -1,11 +1,5 @@
 # -------- Completion
 
-# >> Dynamic completions for rn-* scripts
-# Extracts flags from script source code at shell startup
-if command -v rn-generate-completions &>/dev/null; then
-    eval "$(rn-generate-completions)"
-fi
-
 # >> Loading the required modules
 zmodload zsh/complist
 
@@ -15,6 +9,12 @@ zmodload zsh/complist
 if ! type compdef > /dev/null; then
   autoload -Uz compinit
   compinit -C
+fi
+
+# >> Dynamic completions for rn-* scripts
+# Extracts flags from script source code at shell startup
+if command -v rn-generate-completions &>/dev/null; then
+    eval "$(rn-generate-completions)"
 fi
 
 # Compile the completion dump file for faster loading
