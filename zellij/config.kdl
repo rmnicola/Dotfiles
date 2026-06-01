@@ -51,7 +51,7 @@ web_client {
     font "monospace"
 }
  
-theme "catppuccin-latte"
+theme "catppuccin-macchiato"
 default_layout "default"
 default_shell "zsh"
 pane_frames false

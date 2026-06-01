@@ -3,7 +3,7 @@ set -euo pipefail
 
 # ============================================================================
 # rn-open-workspace.sh — Workspace launcher for Hyprland
-# Opens terminal on current workspace + Firefox on special:<ws>-vertical
+# Terminal on current workspace + Firefox on special:<ws>-vertical
 # ============================================================================
 
 DISCIPLINAS_DIR="$HOME/Documents/Disciplinas"
@@ -115,16 +115,19 @@ session_name=$(echo "$SELECTED_DIR" | tr '[:upper:]' '[:lower:]' | sed 's/[_ ]/-
 profile_dir="$PROFILES_ROOT/$session_name"
 vertical_name="${current_ws}-vertical"
 
-# --- Clear workspace ---
+# --- Clear workspace (no toggles!) ---
+
+# 1. Close windows on current workspace
 hyprctl clients -j \
     | jq -r ".[] | select(.workspace.id == $current_ws) | .address" \
     | xargs -r -I{} hyprctl dispatch closewindow address:{}
 
-# Close Firefox on the vertical special workspace (if any)
-hyprctl dispatch togglespecialworkspace "$vertical_name" 2>/dev/null || true
+# 2. Close windows on the vertical special workspace
 hyprctl clients -j \
-    | jq -r ".[] | select(.workspace.name == \"special:$vertical_name\") | .address" \
+    | jq -r '.[] | select(.workspace.name == "special:'$vertical_name'") | .address' \
     | xargs -r -I{} hyprctl dispatch closewindow address:{}
+
+sleep 0.3
 
 # --- Launch ---
 
@@ -132,8 +135,21 @@ hyprctl clients -j \
 hyprctl dispatch exec \
     "ghostty --class=com.workterm --working-directory='$FULL_PATH' -e zellij attach -c '$session_name'"
 
-# 2. Firefox on special:<ws>-vertical
+# 2. Firefox — launch normally then move to special workspace
 mkdir -p "$profile_dir"
-hyprctl dispatch exec "[workspace special:$vertical_name silent] firefox --profile '$profile_dir'"
+firefox --profile "$profile_dir" &
+firefox_pid=$!
 
-notify-send -u low "Workspace" "$SELECTED_DIR — SUPER+J toggles browser"
+# Wait for Firefox window to appear, then move to vertical special workspace
+for i in $(seq 1 30); do
+    sleep 0.2
+    addr=$(hyprctl clients -j 2>/dev/null \
+        | jq -r ".[] | select(.pid == $firefox_pid) | .address" \
+        | head -1)
+    if [[ -n "$addr" && "$addr" != "null" ]]; then
+        hyprctl dispatch movetoworkspacesilent "special:$vertical_name,address:$addr"
+        break
+    fi
+done
+
+notify-send -u low "Workspace" "$SELECTED_DIR  ·  SUPER+J = browser"
