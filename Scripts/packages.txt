@@ -4,6 +4,10 @@ git
 gum
 yay-bin
 
+# Fingerprint
+fprintd
+libfprint
+
 # System
 tlp
 zsh

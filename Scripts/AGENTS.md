@@ -80,6 +80,7 @@ shellcheck rn-*.sh
 |--------|---------|-----------------|
 | `rn-install-packages.sh` | Install packages from `packages.txt` | `--all`, `--section`, `--exclude` |
 | `rn-install-rust.sh` | Rust toolchain with nightly | Already non-interactive |
+| `rn-configure-fingerprint.sh` | PAM config + fingerprint enrollment | `--auto` (skips enrollment) |
 | `rn-install-dotfiles.sh` | Clone & symlink dotfiles | `--auto`, `--repo` |
 | `rn-configure-zsh.sh` | Zsh + XDG env vars | Already non-interactive |
 | `rn-configure-git.sh` | Git user, SSH signing | Interactive only (user-specific) |

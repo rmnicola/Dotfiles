@@ -133,23 +133,26 @@ if [[ "$AUTO_MODE" == "true" ]]; then
     SELECTED_STEPS="1. Install dependencies
 2. Configure rust
 3. Install packages
-4. Install dotfiles
-5. Install keyboard config
-6. Configure zsh
-7. Configure power management"
+4. Install fingerprint
+5. Install dotfiles
+6. Install keyboard config
+7. Configure zsh
+8. Configure power management"
     gum log --level warn "Auto mode skips SSH/Git user configuration because it requires personal input."
     gum log --level warn "Auto mode skips Omarchy Cleaner because the external script is interactive."
+    gum log --level warn "Auto mode skips fingerprint enrollment (PAM config is still applied by package install)."
 else
     declare -a STEPS=(
         "1. Install dependencies"
         "2. Configure rust"
         "3. Install packages"
-        "4. Install dotfiles"
-        "5. Install keyboard config"
-        "6. Configure zsh"
-        "7. Configure power management"
-        "8. Configure git"
-        "9. Run cleaner script"
+        "4. Install fingerprint"
+        "5. Install dotfiles"
+        "6. Install keyboard config"
+        "7. Configure zsh"
+        "8. Configure power management"
+        "9. Configure git"
+        "10. Run cleaner script"
     )
 
     gum style --foreground 212 --italic "Select steps to execute (Space to toggle, Enter to confirm)"
@@ -174,28 +177,36 @@ if [[ "$SELECTED_STEPS" == *"3. Install packages"* ]]; then
     run_script "Package installation" "rn-install-packages.sh" "--exclude" "Depend" "--all"
 fi
 
-if [[ "$SELECTED_STEPS" == *"4. Install dotfiles"* ]]; then
+if [[ "$SELECTED_STEPS" == *"4. Install fingerprint"* ]]; then
+    if [[ "$AUTO_MODE" == "true" ]]; then
+        run_script "Fingerprint PAM configuration" "rn-configure-fingerprint.sh" "--auto"
+    else
+        run_script "Fingerprint configuration" "rn-configure-fingerprint.sh"
+    fi
+fi
+
+if [[ "$SELECTED_STEPS" == *"5. Install dotfiles"* ]]; then
     run_script "Dotfiles installation" "rn-install-dotfiles.sh" "--auto"
 fi
 
-if [[ "$SELECTED_STEPS" == *"5. Install keyboard config"* ]]; then
+if [[ "$SELECTED_STEPS" == *"6. Install keyboard config"* ]]; then
     run_script "Keyboard configuration" "rn-install-keyd.sh" "--auto" "$HOME/Documents/Dotfiles"
 fi
 
-if [[ "$SELECTED_STEPS" == *"6. Configure zsh"* ]]; then
+if [[ "$SELECTED_STEPS" == *"7. Configure zsh"* ]]; then
     run_script "Zsh configuration" "rn-configure-zsh.sh"
 fi
 
-if [[ "$SELECTED_STEPS" == *"7. Configure power management"* ]]; then
+if [[ "$SELECTED_STEPS" == *"8. Configure power management"* ]]; then
     run_script "TLP power management" "rn-configure-tlp.sh"
 fi
 
-if [[ "$SELECTED_STEPS" == *"8. Configure git"* ]]; then
+if [[ "$SELECTED_STEPS" == *"9. Configure git"* ]]; then
     run_script "SSH key generation" "rn-generate-ssh-key.sh"
     run_script "Git configuration" "rn-configure-git.sh"
 fi
 
-if [[ "$SELECTED_STEPS" == *"9. Run cleaner script"* ]]; then
+if [[ "$SELECTED_STEPS" == *"10. Run cleaner script"* ]]; then
     run_cleaner || exit 1
 fi
 
