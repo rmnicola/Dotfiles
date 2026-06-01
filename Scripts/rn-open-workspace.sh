@@ -167,7 +167,7 @@ hyprctl clients -j \
     | xargs -r -I{} hyprctl dispatch closewindow address:{}
 
 # Set workspace to scrolling layout
-hyprctl keyword workspace "$current_ws, layout:scrolling"
+hyprctl keyword workspace $current_ws, layout:scrolling
 
 # Create browser profile directory
 mkdir -p "$profile_dir"
