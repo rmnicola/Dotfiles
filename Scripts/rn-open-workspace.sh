@@ -137,6 +137,14 @@ hyprctl dispatch exec \
 
 # 2. Firefox — launch normally then move to special workspace
 mkdir -p "$profile_dir"
+
+# Ensure Firefox restores the last session for this profile
+if [[ ! -f "$profile_dir/user.js" ]]; then
+    cat > "$profile_dir/user.js" <<'USERJS'
+user_pref("browser.startup.page", 3);
+user_pref("browser.sessionstore.resume_session_once", true);
+USERJS
+fi
 firefox --profile "$profile_dir" &
 firefox_pid=$!
 
