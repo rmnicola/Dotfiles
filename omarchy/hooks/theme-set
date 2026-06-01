@@ -3,4 +3,3 @@
 # This hook is called with the snake-cased name of the theme that has just been set.
 # To put it into use, remove .sample from the name.
 rn-zellij-theme-hook "$1"
-rn-opencode-theme-hook "$1"
