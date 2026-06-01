@@ -4,7 +4,7 @@
   "position": "top",
   "spacing": 0,
   "height": 20,
-  "modules-left": ["custom/omarchy", "hyprland/workspaces", "custom/vertical-indicator"],
+  "modules-left": ["custom/omarchy", "hyprland/workspaces"],
   "modules-center": ["clock", "custom/update", "custom/screenrecording-indicator", "custom/idle-indicator", "custom/notification-silencing-indicator"],
   "modules-right": [
     "group/tray-expander",
@@ -173,15 +173,5 @@
   "tray": {
     "icon-size": 12,
     "spacing": 12
-  },
-  "custom/vertical-indicator": {
-    "exec": "rn-vertical-indicator",
-    "interval": 1,
-    "return-type": "json",
-    "format": "{icon}",
-    "format-icons": {
-      "default": ""
-    },
-    "tooltip": false
   }
 }

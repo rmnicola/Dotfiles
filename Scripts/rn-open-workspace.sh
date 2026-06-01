@@ -30,7 +30,7 @@ EOF
 
 check_dependencies() {
     local missing=()
-    for cmd in walker jq hyprctl firefox ghostty zellij; do
+    for cmd in walker jq hyprctl firefox ghostty zellij git; do
         command -v "$cmd" &>/dev/null || missing+=("$cmd")
     done
     if [[ ${#missing[@]} -gt 0 ]]; then
@@ -99,15 +99,53 @@ esac
 if [[ -z "$SELECTED_DIR" ]]; then
     selected_item=$(find "$root_dir" -mindepth 1 -maxdepth 1 -type d \
         -not -name '.*' -printf '%f\n' | sort \
-        | walker --dmenu --placeholder "Select item…")
+        | walker --dmenu --placeholder "Select or type (user/repo …) …")
     [[ -z "$selected_item" ]] && exit 0
-    SELECTED_DIR="$selected_item"
-    FULL_PATH="$root_dir/$SELECTED_DIR"
-fi
 
-if [[ ! -d "$FULL_PATH" ]]; then
-    notify-send -u critical "Workspace Launcher" "Not found: $FULL_PATH"
-    exit 1
+    # Split: "user/repo" or "user/repo custom-name" or just "name"
+    read -r first_arg second_arg <<< "$selected_item"
+    rest_args="${selected_item#$first_arg }"
+    [[ "$rest_args" == "$selected_item" ]] && rest_args=""
+
+    # --- GitHub clone ---
+    if [[ "$first_arg" =~ ^[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+$ ]] || [[ "$first_arg" =~ github\.com ]]; then
+        if [[ "$first_arg" =~ github\.com ]]; then
+            REPO_URL="$first_arg"
+        else
+            REPO_URL="https://github.com/${first_arg}.git"
+        fi
+
+        if [[ -n "$rest_args" ]]; then
+            SELECTED_DIR="$rest_args"
+        else
+            SELECTED_DIR=$(basename "$REPO_URL" .git)
+        fi
+
+        FULL_PATH="$root_dir/$SELECTED_DIR"
+
+        if [[ -d "$FULL_PATH" ]]; then
+            notify-send "Workspace Launcher" "Already exists — opening $SELECTED_DIR"
+        else
+            notify-send "Workspace Launcher" "Cloning $first_arg → $SELECTED_DIR"
+            git clone "$REPO_URL" "$FULL_PATH" || {
+                notify-send -u critical "Workspace Launcher" "Clone failed"
+                exit 1
+            }
+        fi
+
+    # --- Existing or new directory ---
+    else
+        SELECTED_DIR="$selected_item"
+        FULL_PATH="$root_dir/$SELECTED_DIR"
+
+        if [[ ! -d "$FULL_PATH" ]]; then
+            mkdir -p "$FULL_PATH"
+            if [[ "$CATEGORY" == "disciplinas" ]]; then
+                mkdir -p "$FULL_PATH"/{aulas,atividades,projeto,provas,correcoes/{projeto,atividades,provas}}
+            fi
+            notify-send "Workspace Launcher" "Created $SELECTED_DIR"
+        fi
+    fi
 fi
 
 # --- Session name ---

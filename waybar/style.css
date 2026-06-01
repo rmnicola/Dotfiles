@@ -108,9 +108,3 @@ tooltip {
 #custom-notification-silencing-indicator.active {
   color: #a55555;
 }
-
-#custom-vertical-indicator.vertical {
-  color: #d4a017;
-  font-weight: bold;
-  padding: 0 4px;
-}
