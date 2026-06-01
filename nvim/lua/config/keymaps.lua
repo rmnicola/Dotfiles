@@ -26,3 +26,8 @@ del({ "n", "t" }, "<C-_>")
 del("n", "<leader>-")
 del("n", "<leader>|")
 del("n", "<leader>wd")
+
+-- Move by visual line on wrapped text, but keep counted jumps logical
+-- (so 10j still respects relativenumber)
+map({ "n", "v" }, "j", "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
+map({ "n", "v" }, "k", "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })

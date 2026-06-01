@@ -15,5 +15,6 @@ opt.makeprg = "make"
 opt.relativenumber = true
 opt.scrolloff = 10
 opt.swapfile = false
-opt.textwidth = 80
 opt.wrap = true
+opt.linebreak = true
+opt.breakindent = true

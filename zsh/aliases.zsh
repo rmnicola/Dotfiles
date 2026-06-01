@@ -30,6 +30,9 @@ alias ....='cd ../../..'
 alias ros-init="source ros-env"
 alias conda-init='eval "$($HOME/miniconda3/bin/conda shell.zsh hook)"'
 
+# Prevent idle lock/suspend while working
+alias work='systemd-inhibit --what=idle:sleep --who="Trabalhando" --why="Evitar lock/suspend" --mode=block zsh'
+
 # Git
 alias gl="git log --oneline --graph"
 alias gs="git status"
