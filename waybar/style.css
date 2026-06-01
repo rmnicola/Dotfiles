@@ -109,7 +109,8 @@ tooltip {
   color: #a55555;
 }
 
-#workspaces button.special {
+#custom-vertical-indicator.vertical {
   color: #d4a017;
   font-weight: bold;
+  padding: 0 4px;
 }
