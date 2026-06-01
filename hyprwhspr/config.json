@@ -12,6 +12,8 @@
   "rest_timeout": 30,
   "rest_audio_format": "wav",
   "language": null,
+  "paste_mode": "ctrl_shift",
+  "shift_paste": true,
   "mic_osd_enabled": true,
   "audio_feedback": false
 }
