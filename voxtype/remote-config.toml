@@ -1,0 +1,32 @@
+# Voxtype Remote API Configuration
+# For use with Shift+F9 keybinding (OpenAI Whisper API)
+# Set your API key via: export VOXTYPE_WHISPER_API_KEY="sk-..."
+# Or uncomment remote_api_key below (less secure)
+
+state_file = "auto"
+
+[hotkey]
+enabled = false
+
+[whisper]
+backend = "remote"
+remote_endpoint = "https://api.openai.com"
+remote_model = "whisper-1"
+
+language = "auto"
+
+[audio]
+device = "default"
+sample_rate = 16000
+max_duration_secs = 60
+pause_media = true
+
+[output]
+mode = "type"
+fallback_to_clipboard = true
+type_delay_ms = 1
+
+[output.notification]
+on_recording_start = false
+on_recording_stop = false
+on_transcription = false

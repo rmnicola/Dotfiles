@@ -41,4 +41,11 @@ export STARSHIP_CONFIG="$XDG_CONFIG_HOME/starship/starship.toml"
 # >> BAT config
 export BAT_THEME=ansi
 
+# >> Voxtype API key
+if [[ -f "$XDG_CONFIG_HOME/voxtype/.env" ]]; then
+  set -a
+  source "$XDG_CONFIG_HOME/voxtype/.env"
+  set +a
+fi
+
 # -------- End of ZSH environment variables

@@ -1,0 +1,17 @@
+{
+  "$schema": "https://raw.githubusercontent.com/goodroot/hyprwhspr/main/share/config.schema.json",
+  "primary_shortcut": "SUPER+D",
+  "recording_mode": "auto",
+  "use_hypr_bindings": true,
+  "transcription_backend": "rest-api",
+  "rest_api_provider": "openai",
+  "rest_endpoint_url": "https://api.openai.com/v1/audio/transcriptions",
+  "rest_body": {
+    "model": "gpt-4o-mini-transcribe"
+  },
+  "rest_timeout": 30,
+  "rest_audio_format": "wav",
+  "language": null,
+  "mic_osd_enabled": true,
+  "audio_feedback": false
+}
