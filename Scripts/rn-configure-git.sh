@@ -1,14 +1,12 @@
 #! /bin/bash
 
-if [[ ! -x $(which figlet) ]]; then
+if ! command -v figlet &> /dev/null; then
     sudo pacman -S --noconfirm figlet
-    exit 1
 fi
 
-if [[ ! -x $(which gum) ]]; then
-    echo "This script uses Gum. Install it before continuing..."
+if ! command -v gum &> /dev/null; then
+    echo "This script uses Gum. Installing..."
     sudo pacman -S --noconfirm gum
-    exit 1
 fi
 
 gum style \

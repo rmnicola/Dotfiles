@@ -8,6 +8,16 @@
 # Configuration
 SCRIPT_DIR=$(dirname "$(readlink -f "$0")")
 CLEANER_URL="https://raw.githubusercontent.com/maxart/omarchy-cleaner/main/omarchy-cleaner.sh"
+AUTO_MODE=false
+
+usage() {
+    echo "Usage: $0 [--all] [--no-reboot]"
+    echo ""
+    echo "  --all        Run all steps non-interactively"
+    echo "  --no-reboot  Skip reboot prompt at the end"
+    echo "  -h, --help   Show this help"
+    exit 0
+}
 
 # ==========================================
 # UI Functions
@@ -29,7 +39,6 @@ show_header() {
     echo ""
 }
 
-# Wrapper to run a local script visually
 run_script() {
     local title="$1"
     local script_name="$2"
@@ -39,14 +48,13 @@ run_script() {
     echo ""
     gum style --foreground 212 --bold "👉 Step: $title"
 
-    # Check if script exists
+    if [[ ! -f "$SCRIPT_DIR/$script_name" ]]; then
+        gum style --foreground 196 "   Error: '$script_name' not found in $SCRIPT_DIR"
+        return 1
+    fi
+
     if [[ ! -x "$SCRIPT_DIR/$script_name" ]]; then
-        if [[ -f "$SCRIPT_DIR/$script_name" ]]; then
-            chmod +x "$SCRIPT_DIR/$script_name"
-        else
-            gum style --foreground 196 "   Error: '$script_name' not found in $SCRIPT_DIR"
-            return 1
-        fi
+        chmod +x "$SCRIPT_DIR/$script_name"
     fi
 
     if "$SCRIPT_DIR/$script_name" "${args[@]}"; then
@@ -58,14 +66,20 @@ run_script() {
     fi
 }
 
-# Special wrapper for the remote cleaner
 run_cleaner() {
     echo ""
     gum style --foreground 212 --bold "👉 Step: Omarchy Cleaner"
-    
+
+    if [[ "$AUTO_MODE" == "true" ]]; then
+        if curl -fsSL "$CLEANER_URL" | bash; then
+            gum style --foreground 82 "   ✓ System cleaning complete."
+        else
+            gum style --foreground 196 "   ✗ Cleaner script failed."
+        fi
+        return
+    fi
+
     if gum confirm "Download and run the Cleaner script?"; then
-        # We pipe directly to bash. Since the cleaner uses gum too, 
-        # it will take over the TUI seamlessly.
         if curl -fsSL "$CLEANER_URL" | bash; then
             gum style --foreground 82 "   ✓ System cleaning complete."
         else
@@ -80,7 +94,16 @@ run_cleaner() {
 # Main Logic
 # ==========================================
 
-# Dependency Check
+while [[ "$#" -gt 0 ]]; do
+    case $1 in
+        --all) AUTO_MODE=true ;;
+        --no-reboot) NO_REBOOT=true ;;
+        -h|--help) usage ;;
+        *) echo "Unknown: $1"; usage ;;
+    esac
+    shift
+done
+
 if ! command -v gum &> /dev/null; then
     echo "Error: gum is not installed. Please install it manually first."
     exit 1
@@ -88,66 +111,68 @@ fi
 
 show_header
 
-# 1. Define the Menu Options
-declare -a STEPS=(
-    "1. Install dependencies"
-    "2. Configure rust"
-    "3. Install packages"
-    "4. Install dotfiles"
-    "5. Configure zsh"
-    "6. Configure power management"
-    "7. Configure git"
-    "8. Run cleaner script"
-)
+# --- Step selection ---
+if [[ "$AUTO_MODE" == "true" ]]; then
+    gum log --level info "Auto mode: running all steps..."
+    SELECTED_STEPS="1. Install dependencies
+2. Configure rust
+3. Install packages
+4. Install dotfiles
+5. Configure zsh
+6. Configure power management
+7. Configure git
+8. Run cleaner script"
+else
+    declare -a STEPS=(
+        "1. Install dependencies"
+        "2. Configure rust"
+        "3. Install packages"
+        "4. Install dotfiles"
+        "5. Configure zsh"
+        "6. Configure power management"
+        "7. Configure git"
+        "8. Run cleaner script"
+    )
 
-# 2. Wizard Selection
-gum style --foreground 212 --italic "Select steps to execute (Space to toggle, Enter to confirm)"
-SELECTED_STEPS=$(gum choose --no-limit --selected="$(IFS=,; echo "${STEPS[*]}")" "${STEPS[@]}")
+    gum style --foreground 212 --italic "Select steps to execute (Space to toggle, Enter to confirm)"
+    SELECTED_STEPS=$(gum choose --no-limit --selected="$(IFS=,; echo "${STEPS[*]}")" "${STEPS[@]}")
 
-if [[ -z "$SELECTED_STEPS" ]]; then
-    gum style --foreground 196 "No steps selected. Exiting."
-    exit 0
+    if [[ -z "$SELECTED_STEPS" ]]; then
+        gum style --foreground 196 "No steps selected. Exiting."
+        exit 0
+    fi
 fi
 
-# 3. Execution Loop
-
-# --- Step 1: System Packages ---
+# --- Execution ---
 if [[ "$SELECTED_STEPS" == *"1. Install dependencies"* ]]; then
     run_script "System dependencies" "rn-install-packages.sh" "-s" "Depend" "-a"
 fi
 
-# --- Step 2: Rust ---
 if [[ "$SELECTED_STEPS" == *"2. Configure rust"* ]]; then
     run_script "Rust configuration" "rn-install-rust.sh"
 fi
 
-# --- Step 3: All Packages ---
 if [[ "$SELECTED_STEPS" == *"3. Install packages"* ]]; then
     run_script "Package installation" "rn-install-packages.sh" "-e" "Depend"
 fi
 
-# --- Step 4: Dotfiles ---
 if [[ "$SELECTED_STEPS" == *"4. Install dotfiles"* ]]; then
-    run_script "Dotfiles installation" "rn-install-dotfiles.sh"
+    run_script "Dotfiles installation" "rn-install-dotfiles.sh" "--auto"
 fi
 
-# --- Step 5: Zsh ---
 if [[ "$SELECTED_STEPS" == *"5. Configure zsh"* ]]; then
     run_script "Zsh configuration" "rn-configure-zsh.sh"
 fi
 
-# --- Step 6: TLP ---
 if [[ "$SELECTED_STEPS" == *"6. Configure power management"* ]]; then
     run_script "TLP power management" "rn-configure-tlp.sh"
 fi
 
-# --- Step 7: Git ---
 if [[ "$SELECTED_STEPS" == *"7. Configure git"* ]]; then
     run_script "SSH key generation" "rn-generate-ssh-key.sh"
     run_script "Git configuration" "rn-configure-git.sh"
 fi
 
-# --- Step 8: Cleaner ---
 if [[ "$SELECTED_STEPS" == *"8. Run cleaner script"* ]]; then
     run_cleaner
 fi
@@ -163,10 +188,15 @@ gum style \
     --padding "1 2" \
     --margin "1" \
     --align center \
-    "🎉 SETUP COMPLETE" \
+    "SETUP COMPLETE" \
     "" \
     "The system configuration sequence has finished." \
     "It is highly recommended to reboot your system now."
+
+if [[ "$NO_REBOOT" == "true" ]]; then
+    gum style --foreground 240 "Reboot skipped (--no-reboot)."
+    exit 0
+fi
 
 echo ""
 if gum confirm "Reboot system now?"; then
